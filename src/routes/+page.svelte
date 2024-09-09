@@ -31,14 +31,14 @@
 
 <main class="container mx-auto px-4">
 	<section class="hero py-20 text-center">
-		<h1 class="mb-4 text-5xl font-bold tracking-wide">Open Source Asset Store</h1>
+		<h1 class="mb-4 text-5xl font-semibold tracking-normal">Open Source Asset Store</h1>
 		<p class="mb-8 text-xl">
 			Access high-quality, free and paid game assets to bring your vision to life
 		</p>
 		<div class="mt-4 flex justify-center">
 			<div class="flex flex-col items-center gap-4 sm:flex-row">
-				<Button size="lg">Browse Godot Assets</Button>
-				<Button size="lg">Browse Bevy Assets</Button>
+				<Button variant="outline" size="lg">Browse Godot Assets</Button>
+				<Button variant="secondary" size="lg">Browse Bevy Assets</Button>
 			</div>
 		</div>
 	</section>

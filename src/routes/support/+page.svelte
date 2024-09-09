@@ -7,6 +7,7 @@
 
 	let name = '';
 	let email = '';
+	let subject = '';
 	let message = '';
 	let submitted = false;
 
@@ -31,9 +32,10 @@
 				</p>
 			{:else}
 				<form on:submit|preventDefault={handleSubmit} class="grid grid-cols-1 gap-4">
-					<Input type="text" bind:value={name} placeholder="Name" required />
+					<Input type="text" bind:value={name} placeholder="Name / Username" required />
 					<Input type="email" bind:value={email} placeholder="Email" required />
-					<Textarea bind:value={message} placeholder="Message" required rows={4} />
+					<Input bind:value={subject} placeholder="Subject" required />
+					<Textarea bind:value={message} placeholder="Message" required />
 					<Button type="submit" variant="outline" class="w-full">
 						Send Message
 						<ArrowRight class="ml-2 h-4 w-4" />

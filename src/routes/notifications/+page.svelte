@@ -83,53 +83,55 @@
 	}
 </script>
 
-<div class="container mx-auto py-10">
+<div class="container mx-auto px-2 sm:px-4">
 	<Card class="shadow-lg">
 		<CardHeader>
-			<div class="flex items-center justify-between">
+			<div class="flex flex-col items-start justify-between sm:flex-row sm:items-center">
 				<div>
-					<CardTitle class="text-3xl font-bold">Notifications</CardTitle>
-					<CardDescription class="mt-1 text-muted-foreground">
+					<CardTitle class="text-2xl font-bold sm:text-3xl">Notifications</CardTitle>
+					<CardDescription class="mt-1 text-sm text-muted-foreground sm:text-base">
 						Stay updated with your asset store activity
 					</CardDescription>
 				</div>
-				<Button variant="outline" class="hidden sm:inline-flex">Mark all as read</Button>
+				<Button variant="outline" class="mt-2 w-full sm:mt-0 sm:w-auto">Mark all as read</Button>
 			</div>
 		</CardHeader>
 		<CardContent>
-			<ScrollArea class="h-[600px] w-full rounded-md border p-4">
+			<ScrollArea class="h-[400px] w-full rounded-md border p-2 sm:h-[600px] sm:p-4">
 				<ul class="space-y-4">
 					{#each notifications as notification}
 						<li>
 							<div
-								class="flex items-start space-x-4 rounded-lg p-4 transition-colors duration-200 hover:bg-accent"
+								class="flex items-start space-x-2 rounded-lg p-2 transition-colors duration-200 hover:bg-accent sm:space-x-4 sm:p-4"
 							>
 								<div class="flex-shrink-0">
-									<div class="rounded-full bg-secondary p-2">
+									<div class="rounded-full bg-secondary p-1 sm:p-2">
 										<svelte:component
 											this={notification.icon}
-											class="h-5 w-5 {getNotificationColor(notification.type)}"
+											class="h-4 w-4 sm:h-5 sm:w-5 {getNotificationColor(notification.type)}"
 										/>
 									</div>
 								</div>
 								<div class="flex-grow">
-									<div class="flex items-center justify-between">
-										<h3 class="text-lg font-semibold">{notification.title}</h3>
-										<div class="flex items-center space-x-2">
+									<div class="flex flex-col justify-between sm:flex-row sm:items-center">
+										<h3 class="text-base font-semibold sm:text-lg">{notification.title}</h3>
+										<div class="mt-1 flex items-center space-x-2 sm:mt-0">
 											<Badge variant={notification.read ? 'secondary' : 'default'} class="text-xs">
 												{notification.read ? 'Read' : 'New'}
 											</Badge>
-											<Button variant="ghost" size="icon" class="h-8 w-8">
-												<MoreVertical class="h-4 w-4" />
+											<Button variant="ghost" size="icon" class="h-6 w-6 sm:h-8 sm:w-8">
+												<MoreVertical class="h-3 w-3 sm:h-4 sm:w-4" />
 											</Button>
 										</div>
 									</div>
-									<p class="mt-1 text-sm text-muted-foreground">{notification.description}</p>
-									<p class="mt-2 text-xs text-muted-foreground">{formatDate(notification.date)}</p>
+									<p class="mt-1 text-xs text-muted-foreground sm:text-sm">
+										{notification.description}
+									</p>
+									<p class="mt-1 text-xs text-muted-foreground">{formatDate(notification.date)}</p>
 								</div>
 							</div>
 							{#if notification !== notifications[notifications.length - 1]}
-								<Separator class="my-4" />
+								<Separator class="my-2 sm:my-4" />
 							{/if}
 						</li>
 					{/each}

@@ -41,23 +41,23 @@
 	$: categories = ['All', ...new Set(products.map((p) => p.category))];
 </script>
 
-<div class="container mx-auto px-4 py-8">
-	<h1 class="mb-6 text-3xl font-bold">{pageTitle}</h1>
-	<div
-		class="mb-6 flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0"
-	>
-		<div class="relative">
-			<Search class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+<div class="container mx-auto px-2 py-4 sm:px-4 sm:py-8">
+	<h1 class="mb-4 text-2xl font-bold sm:mb-6 sm:text-3xl">{pageTitle}</h1>
+	<div class="mb-4 flex flex-col space-y-4 sm:mb-6">
+		<div class="relative w-full">
+			<Search
+				class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground sm:h-5 sm:w-5"
+			/>
 			<Input
 				type="text"
 				placeholder="Search products..."
-				class="pl-10 md:w-[300px]"
+				class="w-full pl-10"
 				bind:value={searchTerm}
 			/>
 		</div>
-		<div class="flex space-x-2">
-			<Select bind:value={selectedCategory}>
-				<SelectTrigger class="w-[180px]">
+		<div class="flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+			<Select bind:value={selectedCategory} class="w-full sm:w-auto">
+				<SelectTrigger class="w-full sm:w-[180px]">
 					<SelectValue placeholder="Select category" />
 				</SelectTrigger>
 				<SelectContent>
@@ -66,8 +66,8 @@
 					{/each}
 				</SelectContent>
 			</Select>
-			<Select bind:value={sortOption}>
-				<SelectTrigger class="w-[180px]">
+			<Select bind:value={sortOption} class="w-full sm:w-auto">
+				<SelectTrigger class="w-full sm:w-[180px]">
 					<SelectValue placeholder="Sort by" />
 				</SelectTrigger>
 				<SelectContent>
@@ -80,7 +80,7 @@
 			</Select>
 		</div>
 	</div>
-	<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+	<div class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 		{#each filteredProducts as product (product.id)}
 			<ProductCard {product} />
 		{/each}

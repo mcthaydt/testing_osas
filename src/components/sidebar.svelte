@@ -10,9 +10,7 @@
 		Bell,
 		DollarSign
 	} from 'lucide-svelte';
-
 	let isExpanded = false;
-
 	const mainMenuItems = [
 		{ icon: Home, text: 'Godot', link: '/godot' },
 		{ icon: BarChart2, text: 'Bevy', link: '/bevy' },
@@ -21,17 +19,17 @@
 		{ icon: FileText, text: 'Voting', link: '/voting' },
 		{ icon: Bell, text: 'Notifications', link: '/notifications' }
 	];
-
 	const bottomMenuItems = [
 		{ icon: HelpCircle, text: 'Support', link: '/support' },
 		{ icon: DollarSign, text: 'Donate', link: '/donate' }
 	];
-
 	function handleMouseEnter() {
 		isExpanded = true;
 	}
-
 	function handleMouseLeave() {
+		isExpanded = false;
+	}
+	function handleClick() {
 		isExpanded = false;
 	}
 </script>
@@ -49,6 +47,7 @@
 				<a
 					href={item.link}
 					class="flex cursor-pointer items-center px-4 py-3 text-muted-foreground transition-colors duration-200 hover:bg-primary/10 hover:text-primary"
+					on:click={handleClick}
 				>
 					<div
 						class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-secondary"
@@ -67,7 +66,6 @@
 						{/if}
 					</div>
 				</a>
-
 				{#if i === 3}
 					<div class="my-4"></div>
 				{/if}
@@ -78,6 +76,7 @@
 				<a
 					href={item.link}
 					class="flex cursor-pointer items-center px-4 py-3 text-muted-foreground transition-colors duration-200 hover:bg-primary/10 hover:text-primary"
+					on:click={handleClick}
 				>
 					<div
 						class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-secondary"
