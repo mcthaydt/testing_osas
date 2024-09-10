@@ -13,18 +13,16 @@
 
 	function handleSubmit() {
 		// Here you would typically send the form data to your backend
-		console.log('Form submitted:', { name, email, message });
+		console.log('Form submitted:', { name, email, subject, message });
 		submitted = true;
 	}
 </script>
 
-<div class="container mx-auto py-10">
-	<div
-		class="flex h-[calc(100vh-8rem)] items-center justify-center overflow-y-hidden bg-background py-8"
-	>
+<div class="container mx-auto p-4 sm:p-6 md:p-8 lg:p-10">
+	<div class="flex min-h-screen items-center justify-center">
 		<Card class="w-full max-w-md">
 			<CardHeader>
-				<CardTitle class="text-center text-3xl">Contact Support</CardTitle>
+				<CardTitle class="text-center text-2xl sm:text-3xl">Contact Support</CardTitle>
 			</CardHeader>
 			<CardContent>
 				{#if submitted}
