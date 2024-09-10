@@ -12,8 +12,7 @@
 	let submitted = false;
 
 	function handleSubmit() {
-		// Here you would typically send the form data to your backend
-		console.log('Form submitted:', { name, email, subject, message });
+
 		submitted = true;
 	}
 </script>
@@ -22,7 +21,7 @@
 	<div class="flex max-h-screen items-center justify-center">
 		<Card class="w-full max-w-md">
 			<CardHeader>
-				<CardTitle class="text-center text-2xl sm:text-3xl">Contact Support</CardTitle>
+				<CardTitle class="text-left text-2xl sm:text-3xl">Contact Support</CardTitle>
 			</CardHeader>
 			<CardContent>
 				{#if submitted}
