@@ -4,44 +4,39 @@
 
 	const faqItems = [
 		{
-			question: 'What game engines do you support?',
+			question: 'How does your store differ from other game asset marketplaces?',
 			answer:
-				'We primarily support open source game engines, with a focus on Godot and Bevy. However, many of our assets can be used in other engines as well, depending on their format.'
+				'We primarily support open-source game engines, with a focus on Godot and Bevy. Our marketplace is designed to cater specifically to the needs of developers working with these engines, but many of our assets are versatile and can be used across other engines as well, depending on their format.'
 		},
 		{
-			question: 'Are the assets on your store free?',
+			question: 'What measures do you take to ensure the quality of assets on your store?',
 			answer:
-				'We offer both free and paid assets. Free assets are clearly marked and can be downloaded without charge. Paid assets require purchase before download.'
+				'We have a community voting process for all assets submitted to our marketplace. Each asset is evaluated for quality, usability, and compatibility. We also encourage user reviews and feedback to maintain high standards.'
 		},
 		{
-			question: 'Can I use the assets in commercial projects?',
+			question: 'How do you handle version control and updates for assets?',
 			answer:
-				'License terms vary by asset. Each asset page clearly states the license terms. Many assets are available for commercial use, but always check the specific license before using in your project.'
+				'We ensure that asset creators can update their assets with new versions easily. Our platform tracks asset versions and allows users to download the latest updates while maintaining access to previous versions if needed.'
 		},
 		{
-			question: 'How do I submit my own assets to the store?',
+			question: 'Is there a community forum or space for users to discuss assets and share tips?',
 			answer:
-				"We welcome submissions from creators! Visit our 'Become a Seller' page to learn about our submission process, quality guidelines, and revenue sharing model."
+				'Yes, we will eventually create a Discord where users can discuss assets, share tips, and collaborate on projects. This space also allows for direct interaction between asset creators and users.'
 		},
 		{
-			question: 'What file formats do you support?',
+			question: "How do you protect creators' intellectual property?",
 			answer:
-				"We support a wide range of formats including, but not limited to, .gltf, .obj, .fbx for 3D models, .png, .jpg for textures, .wav, .ogg for audio, and .gdscript, .rs for scripts. Check each asset's description for specific format information."
+				'We take intellectual property protection seriously. Our platform includes measures to prevent unauthorized distribution of assets and respects the licensing terms set by asset creators.'
 		},
 		{
-			question: 'Do you offer refunds?',
+			question: 'Are there any plans to support proprietary game engines in the future?',
 			answer:
-				'We offer refunds within 14 days of purchase if the asset is unused and unmodified. Please contact our support team with your order number to request a refund.'
+				'We are continually evaluating the needs of our users and may consider supporting proprietary game engines in the future. Stay tuned for updates on this potential expansion.'
 		},
 		{
-			question: "How can I get support for an asset I've purchased?",
+			question: 'Are AI-Generated Assets allowed on the site?',
 			answer:
-				"Each asset page has a 'Support' tab where you can contact the asset creator directly. For store-related issues, please use our general support contact form."
-		},
-		{
-			question: 'Do you offer asset packs or bundles?',
-			answer:
-				"Yes, we offer curated asset packs and themed bundles at discounted prices. Check our 'Bundles' section for current offerings."
+				'Yes, but they must be tagged as such. Users can opt to hide these from their account.'
 		}
 	];
 </script>
