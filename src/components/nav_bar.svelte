@@ -11,8 +11,8 @@
 	<a href="/" class="text-xl font-bold text-primary">OSAS</a>
 	<div class="flex items-center gap-4">
 		<div class="flex gap-4">
-			<Button>Test Dashboard</Button>
-			<Button>Test Profile</Button>
+			<Button>Test DB</Button>
+			<Button>Test PF</Button>
 			<button
 				class="text-primary hover:text-slate-800"
 				aria-label="Shopping Cart"
