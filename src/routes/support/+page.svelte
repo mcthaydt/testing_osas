@@ -19,7 +19,7 @@
 </script>
 
 <div class="container mx-auto p-4 sm:p-6 md:p-8 lg:p-10">
-	<div class="flex min-h-screen items-center justify-center">
+	<div class="flex max-h-screen items-center justify-center">
 		<Card class="w-full max-w-md">
 			<CardHeader>
 				<CardTitle class="text-center text-2xl sm:text-3xl">Contact Support</CardTitle>
