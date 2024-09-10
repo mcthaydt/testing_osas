@@ -63,7 +63,7 @@
 						<p>{featuredAsset.description}</p>
 					</CardContent>
 					<CardFooter>
-						<div class="flex flex-row gap-2">
+						<div class="flex flex-col gap-2 md:flex-row">
 							<a href="https://forms.gle/p8EMx4DoQ3axtvEm9">
 								<Button variant="outline" size="lg">Join Waitlist</Button>
 							</a>
