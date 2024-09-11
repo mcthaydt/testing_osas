@@ -23,8 +23,8 @@
 	];
 
 	const featuredAsset = {
-		name: 'This product does not exist',
-		description: 'But it could - and it could be yours.',
+		name: 'This asset is just a placeholder',
+		description: "We're looking for a real one though 👀",
 		image:
 			'https://images.pexels.com/photos/27180675/pexels-photo-27180675/free-photo-of-perito-moreno-glacier-in-patagonia.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load'
 	};
@@ -81,10 +81,10 @@
 					<CardFooter>
 						<div class="flex flex-col gap-2 md:flex-row">
 							<a href="https://forms.gle/p8EMx4DoQ3axtvEm9">
-								<Button variant="outline" size="lg">Join Waitlist</Button>
+								<Button class="min-w-[150px]" variant="outline" size="lg">Join Waitlist</Button>
 							</a>
 							<a href="/product_item/1">
-								<Button variant="secondary" size="lg">View More</Button>
+								<Button class="min-w-[150px]" variant="secondary" size="lg">View More</Button>
 							</a>
 						</div>
 					</CardFooter>
@@ -142,8 +142,12 @@
 			</Select.DialogDescription>
 		</Select.DialogHeader>
 		<Select.DialogFooter>
-			<Button variant="outline" on:click={() => (showCookieConsent = false)}>Decline</Button>
-			<Button on:click={acceptCookies}>Accept All</Button>
+			<div class="flex flex-col items-center gap-4 sm:flex-row">
+				<Button class="min-w-[125px]" variant="outline" on:click={() => (showCookieConsent = false)}
+					>Decline</Button
+				>
+				<Button class="min-w-[125px]" on:click={acceptCookies}>Accept All</Button>
+			</div>
 		</Select.DialogFooter>
 	</Select.DialogContent>
 </Select.Dialog>
