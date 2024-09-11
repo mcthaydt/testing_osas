@@ -148,4 +148,71 @@
 			</ScrollArea>
 		</CardContent>
 	</Card>
+	<Card class="mt-4">
+		<CardHeader>
+			<CardTitle class="text-3xl">Cookies Notice</CardTitle>
+			<CardDescription
+				>Learn how we use cookies and similar technologies on our games asset store</CardDescription
+			>
+		</CardHeader>
+		<CardContent>
+			<ScrollArea class="h-[600px] w-full rounded-md border p-4">
+				<h2 class="mb-4 text-2xl font-semibold">1. What are Cookies?</h2>
+				<p class="mb-6">
+					Cookies are small text files that are placed on your device when you visit our website.
+					They help us provide you with a better experience and allow certain features to function
+					properly.
+				</p>
+
+				<h2 class="mb-4 text-2xl font-semibold">2. How We Use Cookies</h2>
+				<p class="mb-6">
+					We use cookies to remember your preferences, understand how you use our games asset store,
+					and improve our services. This includes personalizing content, providing secure login
+					sessions, and analyzing site traffic.
+				</p>
+
+				<h2 class="mb-4 text-2xl font-semibold">3. Types of Cookies We Use</h2>
+				<p class="mb-6">
+					We use both session cookies (which expire when you close your browser) and persistent
+					cookies (which stay on your device for a set period). These include essential cookies for
+					site functionality, performance cookies for analytics, and targeting cookies for
+					personalized content.
+				</p>
+
+				<h2 class="mb-4 text-2xl font-semibold">4. Third-Party Cookies</h2>
+				<p class="mb-6">
+					Some cookies may be set by third-party services we use, such as analytics tools or payment
+					processors. These cookies help us understand user behavior and process transactions
+					securely.
+				</p>
+
+				<h2 class="mb-4 text-2xl font-semibold">5. Managing Cookies</h2>
+				<p class="mb-6">
+					You can control and/or delete cookies as you wish. You can delete all cookies that are
+					already on your computer and you can set most browsers to prevent them from being placed.
+					However, if you do this, you may have to manually adjust some preferences every time you
+					visit our site.
+				</p>
+
+				<h2 class="mb-4 text-2xl font-semibold">6. Cookies and Game Assets</h2>
+				<p class="mb-6">
+					Cookies help us provide a seamless experience when browsing, downloading, and managing
+					game assets for open source game engines. They allow us to remember your asset library,
+					download history, and preferences.
+				</p>
+
+				<h2 class="mb-4 text-2xl font-semibold">7. Updates to This Notice</h2>
+				<p class="mb-6">
+					We may update this Cookies Notice from time to time. We will notify you of any significant
+					changes by posting a prominent notice on our website.
+				</p>
+
+				<h2 class="mb-4 text-2xl font-semibold">8. Contact Us</h2>
+				<p>
+					If you have any questions about our use of cookies, please contact us at [Your Contact
+					Information].
+				</p>
+			</ScrollArea>
+		</CardContent>
+	</Card>
 </div>

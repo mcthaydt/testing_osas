@@ -34,7 +34,7 @@
 				'We are continually evaluating the needs of our users and may consider supporting proprietary game engines in the future. Stay tuned for updates on this potential expansion.'
 		},
 		{
-			question: 'Are AI-Generated Assets allowed on the site?',
+			question: 'Are AI-generated assets allowed on the site?',
 			answer:
 				'Yes, but they must be tagged as such. Users can opt to hide these from their account.'
 		}

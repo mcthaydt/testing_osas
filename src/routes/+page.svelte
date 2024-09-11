@@ -1,7 +1,9 @@
 <script>
 	import { Button } from '$lib/components/ui/button';
 	import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '$lib/components/ui/card';
+	import * as Select from '$lib/components/ui/dialog';
 	import { Github, Twitter, ChevronLeft, ChevronRight } from 'lucide-svelte';
+	import { onMount } from 'svelte';
 
 	const features = [
 		{ title: 'Voting System', description: 'Assets are only added when users vote them in.' },
@@ -26,6 +28,20 @@
 		image:
 			'https://images.pexels.com/photos/27180675/pexels-photo-27180675/free-photo-of-perito-moreno-glacier-in-patagonia.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load'
 	};
+
+	let showCookieConsent = false;
+
+	onMount(() => {
+		const cookieConsent = localStorage.getItem('cookieConsent');
+		if (!cookieConsent) {
+			showCookieConsent = true;
+		}
+	});
+
+	function acceptCookies() {
+		localStorage.setItem('cookieConsent', 'true');
+		showCookieConsent = false;
+	}
 </script>
 
 <main class="container mx-auto px-4">
@@ -47,7 +63,7 @@
 	</section>
 
 	<section class="featured-asset py-16">
-		<h2 class="mb-8 text-center text-3xl font-bold">Featured Asset</h2>
+		<h2 class="mb-8 text-center text-3xl font-bold">Featured Collection</h2>
 		<Card class="overflow-hidden">
 			<div class="grid grid-cols-1 md:grid-cols-2">
 				<img
@@ -115,3 +131,19 @@
 		</div>
 	</footer>
 </main>
+
+<Select.Dialog bind:open={showCookieConsent}>
+	<Select.DialogContent>
+		<Select.DialogHeader>
+			<Select.DialogTitle>Cookie Consent</Select.DialogTitle>
+			<Select.DialogDescription>
+				We use cookies to enhance your browsing experience, serve personalized ads or content, and
+				analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+			</Select.DialogDescription>
+		</Select.DialogHeader>
+		<Select.DialogFooter>
+			<Button variant="outline" on:click={() => (showCookieConsent = false)}>Decline</Button>
+			<Button on:click={acceptCookies}>Accept All</Button>
+		</Select.DialogFooter>
+	</Select.DialogContent>
+</Select.Dialog>
