@@ -9,6 +9,7 @@
 	import { flip } from 'svelte/animate';
 	import { products, upvote } from '$lib/stores/votingStore';
 	import { fade } from 'svelte/transition';
+	import FeaturedCollection from '../components/featured_collection.svelte';
 
 	const features = [
 		{
@@ -37,6 +38,7 @@
 			'https://images.pexels.com/photos/27180675/pexels-photo-27180675/free-photo-of-perito-moreno-glacier-in-patagonia.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load'
 	};
 
+	let showFeaturedCollectionModal = false;
 	let showCookieConsent = false;
 
 	onMount(() => {
@@ -53,7 +55,7 @@
 
 	$: sortedProducts = [...$products]
 		.sort((a, b) => {
-			return a.upvotes - b.upvotes;
+			return b.upvotes - a.upvotes;
 		})
 		.slice(0, 2);
 	$: signupCount = 0;
@@ -110,9 +112,11 @@
 					</CardContent>
 					<CardFooter>
 						<div class="flex flex-col gap-2 md:flex-row">
-							<a href="#/">
-								<Button variant="outline" size="lg">View Collection</Button>
-							</a>
+							<Button
+								variant="outline"
+								size="lg"
+								on:click={() => (showFeaturedCollectionModal = true)}>View Collection</Button
+							>
 						</div>
 					</CardFooter>
 				</div>
@@ -182,7 +186,7 @@
 	</section>
 
 	<section class="cta mb-12 rounded-lg bg-primary-foreground p-16 text-center">
-		<h2 class="mb-4 text-3xl font-bold">Any questions?</h2>
+		<h2 class="mb-4 text-3xl font-bold">Any Questions?</h2>
 		<p class="mb-8">For Frequently Asked Questions, Legal Information, and Contact</p>
 		<a href="support/">
 			<Button variant="secondary" size="lg">Visit Support</Button>
@@ -231,3 +235,5 @@
 		</Select.DialogFooter>
 	</Select.DialogContent>
 </Select.Dialog>
+
+<FeaturedCollection bind:showModal={showFeaturedCollectionModal} />

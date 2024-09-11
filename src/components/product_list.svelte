@@ -1,30 +1,34 @@
 <script lang="ts">
 	import { Input } from '$lib/components/ui/input';
-	import {
-		Select,
-		SelectTrigger,
-		SelectValue,
-		SelectContent,
-		SelectItem
-	} from '$lib/components/ui/select';
-	import { Search } from 'lucide-svelte';
+	import * as Select from '$lib/components/ui/select';
+	import { Checkbox } from '$lib/components/ui/checkbox';
+	import { Button } from '$lib/components/ui/button';
+	import { Search, ChevronDown, ChevronUp } from 'lucide-svelte';
 	import ProductCard from './product_card.svelte';
+	import { flip } from 'svelte/animate';
+	import { fade } from 'svelte/transition';
+	import type { SelectValue } from '$lib/components/ui/select';
 
 	export let products = [];
 	export let pageTitle = 'Products';
 
 	let searchTerm = '';
-	let selectedCategory = 'All';
-	let sortOption = 'name';
+	let selectedCategory: SelectValue<string> = { value: 'All' };
+	let sortOption: SelectValue<string> = { value: 'name' };
+	let selectedTags: string[] = [];
+	let showTagFilter = false;
+
+	$: allTags = [...new Set(products.flatMap((p) => p.tags))];
 
 	$: filteredProducts = products
 		.filter(
 			(product) =>
 				product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-				(selectedCategory === 'All' || product.category === selectedCategory)
+				(selectedCategory.value === 'All' || product.category === selectedCategory.value) &&
+				(selectedTags.length === 0 || selectedTags.every((tag) => product.tags.includes(tag)))
 		)
 		.sort((a, b) => {
-			switch (sortOption) {
+			switch (sortOption.value) {
 				case 'priceHighToLow':
 					return b.price - a.price;
 				case 'priceLowToHigh':
@@ -39,6 +43,12 @@
 		});
 
 	$: categories = ['All', ...new Set(products.map((p) => p.category))];
+
+	function toggleTag(tag: string) {
+		selectedTags = selectedTags.includes(tag)
+			? selectedTags.filter((t) => t !== tag)
+			: [...selectedTags, tag];
+	}
 </script>
 
 <div class="container mx-auto px-2 py-4 sm:px-4 sm:py-8">
@@ -56,33 +66,68 @@
 			/>
 		</div>
 		<div class="flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
-			<Select bind:value={selectedCategory} class="w-full sm:w-auto">
-				<SelectTrigger class="w-full sm:w-[180px]">
-					<SelectValue placeholder="Select category" />
-				</SelectTrigger>
-				<SelectContent>
+			<Select.Root bind:selected={selectedCategory}>
+				<Select.Trigger class="w-full sm:w-[180px]">
+					<Select.Value placeholder="Select category" />
+				</Select.Trigger>
+				<Select.Content>
 					{#each categories as category}
-						<SelectItem value={category}>{category}</SelectItem>
+						<Select.Item value={category}>{category}</Select.Item>
 					{/each}
-				</SelectContent>
-			</Select>
-			<Select bind:value={sortOption} class="w-full sm:w-auto">
-				<SelectTrigger class="w-full sm:w-[180px]">
-					<SelectValue placeholder="Sort by" />
-				</SelectTrigger>
-				<SelectContent>
-					<SelectItem value="name">Name</SelectItem>
-					<SelectItem value="priceHighToLow">Price: High to Low</SelectItem>
-					<SelectItem value="priceLowToHigh">Price: Low to High</SelectItem>
-					<SelectItem value="rating">Rating</SelectItem>
-					<SelectItem value="releaseDate">Release Date</SelectItem>
-				</SelectContent>
-			</Select>
+				</Select.Content>
+			</Select.Root>
+			<Select.Root bind:selected={sortOption}>
+				<Select.Trigger class="w-full sm:w-[180px]">
+					<Select.Value placeholder="Sort by" />
+				</Select.Trigger>
+				<Select.Content>
+					<Select.Item value="name">Name</Select.Item>
+					<Select.Item value="priceHighToLow">Price: High to Low</Select.Item>
+					<Select.Item value="priceLowToHigh">Price: Low to High</Select.Item>
+					<Select.Item value="rating">Rating</Select.Item>
+					<Select.Item value="releaseDate">Release Date</Select.Item>
+				</Select.Content>
+			</Select.Root>
+			<Button
+				variant="outline"
+				class="flex items-center justify-between"
+				on:click={() => (showTagFilter = !showTagFilter)}
+			>
+				Filter by Tags
+				{#if showTagFilter}
+					<ChevronUp class="ml-2 h-4 w-4" />
+				{:else}
+					<ChevronDown class="ml-2 h-4 w-4" />
+				{/if}
+			</Button>
 		</div>
+		{#if showTagFilter}
+			<div class="flex flex-wrap gap-2" transition:fade>
+				{#each allTags as tag}
+					<div class="flex items-center space-x-2">
+						<Checkbox
+							id={tag}
+							checked={selectedTags.includes(tag)}
+							onCheckedChange={() => toggleTag(tag)}
+						/>
+						<label
+							for={tag}
+							class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+						>
+							{tag}
+						</label>
+					</div>
+				{/each}
+			</div>
+		{/if}
 	</div>
 	<div class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 		{#each filteredProducts as product (product.id)}
-			<ProductCard {product} />
+			<div animate:flip={{ duration: 300 }}>
+				<div in:fade={{ duration: 300 }} out:fade={{ duration: 200 }}>
+					<ProductCard {product} />
+				</div>
+			</div>
 		{/each}
 	</div>
 </div>
