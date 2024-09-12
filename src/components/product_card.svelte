@@ -11,11 +11,21 @@
 		CardDescription
 	} from '$lib/components/ui/card';
 	import { AspectRatio } from '$lib/components/ui/aspect-ratio';
+	import { cartStore, type CartItem } from '$lib/stores/cartStore';
+
 	export let product;
 
 	function addToCart() {
-		// Add to cart logic here
-		console.log('Adding to cart:', product.name);
+		const cartItem: CartItem = {
+			id: product.id,
+			name: product.name,
+			price: product.price,
+			quantity: 1,
+			imageUrl: product.imageUrl,
+			category: product.category
+		};
+		cartStore.addItem(cartItem);
+		console.log('Added to cart:', product.name);
 	}
 </script>
 

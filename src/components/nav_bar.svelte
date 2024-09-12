@@ -1,10 +1,19 @@
-<script>
+<script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { ShoppingCart, Upload } from 'lucide-svelte';
-	import { goto } from '$app/navigation'; // Import SvelteKit's navigation function
+	import { goto } from '$app/navigation';
+	import { fly } from 'svelte/transition';
+	import { cartStore } from '$lib/stores/cartStore'; // Assume we have a cartStore
 
-	const goToCart = () => goto('/cart'); // Navigate to /cart
-	const goToUpload = () => goto('/upload'); // Navigate to /upload
+	const goToCart = () => goto('/cart');
+	const goToUpload = () => goto('/upload');
+
+	let cartItemCount = 0;
+
+	// Subscribe to the cartStore to update the cart item count
+	cartStore.subscribe((items) => {
+		cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
+	});
 </script>
 
 <nav class="flex h-12 w-full items-center justify-between bg-background p-8">
@@ -14,11 +23,20 @@
 			<Button>Test DB</Button>
 			<Button>Test PF</Button>
 			<button
-				class="text-primary hover:text-slate-800"
+				class="relative text-primary hover:text-slate-800"
 				aria-label="Shopping Cart"
 				on:click={goToCart}
 			>
 				<ShoppingCart size={24} />
+				{#if cartItemCount > 0}
+					<span
+						class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white"
+						in:fly={{ y: -10, duration: 200 }}
+						out:fly={{ y: -10, duration: 200 }}
+					>
+						{cartItemCount}
+					</span>
+				{/if}
 			</button>
 			<button
 				class="text-primary hover:text-slate-800"

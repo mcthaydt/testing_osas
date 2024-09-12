@@ -8,9 +8,10 @@
 	import { flip } from 'svelte/animate';
 	import { fade } from 'svelte/transition';
 	import type { SelectValue } from '$lib/components/ui/select';
+	import { products } from '$lib/stores/productStore';
 
-	export let products = [];
 	export let pageTitle = 'Products';
+	export let engine: 'Godot' | 'Bevy';
 
 	let searchTerm = '';
 	let selectedCategory: SelectValue<string> = { value: 'All' };
@@ -18,9 +19,10 @@
 	let selectedTags: string[] = [];
 	let showTagFilter = false;
 
-	$: allTags = [...new Set(products.flatMap((p) => p.tags))];
+	$: allProducts = $products.filter((p) => p.category === engine && p.status === 'approved');
+	$: allTags = [...new Set(allProducts.flatMap((p) => p.tags))];
 
-	$: filteredProducts = products
+	$: filteredProducts = allProducts
 		.filter(
 			(product) =>
 				product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -37,12 +39,14 @@
 					return b.rating - a.rating;
 				case 'releaseDate':
 					return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
+				case 'upvotes':
+					return b.upvotes - a.upvotes;
 				default:
 					return a.name.localeCompare(b.name);
 			}
 		});
 
-	$: categories = ['All', ...new Set(products.map((p) => p.category))];
+	$: categories = ['All', ...new Set(allProducts.map((p) => p.category))];
 
 	function toggleTag(tag: string) {
 		selectedTags = selectedTags.includes(tag)
@@ -86,6 +90,7 @@
 					<Select.Item value="priceLowToHigh">Price: Low to High</Select.Item>
 					<Select.Item value="rating">Rating</Select.Item>
 					<Select.Item value="releaseDate">Release Date</Select.Item>
+					<Select.Item value="upvotes">Upvotes</Select.Item>
 				</Select.Content>
 			</Select.Root>
 			<Button

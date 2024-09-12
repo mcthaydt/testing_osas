@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { AspectRatio } from '$lib/components/ui/aspect-ratio';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
@@ -7,7 +7,7 @@
 	import { Github, Twitter, ChevronLeft, ChevronRight, ArrowUp, ExternalLink } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
-	import { products, upvote } from '$lib/stores/votingStore';
+	import { products, upvote } from '$lib/stores/productStore';
 	import { fade } from 'svelte/transition';
 	import FeaturedCollection from '../components/featured_collection.svelte';
 
@@ -53,12 +53,28 @@
 		showCookieConsent = false;
 	}
 
-	$: sortedProducts = [...$products]
-		.sort((a, b) => {
-			return b.upvotes - a.upvotes;
-		})
-		.slice(0, 2);
+	$: productsNearingDeadline = $products.filter((product) => {
+		const uploadTime = new Date(product.uploadDate).getTime();
+		const now = new Date().getTime();
+		const remainingTime = 30 * 24 * 60 * 60 * 1000 - (now - uploadTime);
+		const hoursRemaining = remainingTime / (1000 * 60 * 60);
+		return product.status === 'pending' && hoursRemaining <= 24 && hoursRemaining > 0;
+	});
+	$: sortedProducts = productsNearingDeadline.sort((a, b) => b.upvotes - a.upvotes);
 	$: signupCount = 0;
+
+	function getRemainingTime(uploadDate: string) {
+		const uploadTime = new Date(uploadDate).getTime();
+		const now = new Date().getTime();
+		const remainingTime = 30 * 24 * 60 * 60 * 1000 - (now - uploadTime);
+		const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+		const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+		return `${hours}h ${minutes}m`;
+	}
+
+	function handleUpvote(id: string) {
+		upvote(id);
+	}
 </script>
 
 <main class="container mx-auto px-4">
@@ -159,7 +175,7 @@
 							</AspectRatio>
 							<div class="flex items-center space-x-4">
 								<div class="flex flex-col items-center">
-									<Button variant="outline" size="icon" on:click={() => upvote(product.id)}>
+									<Button variant="outline" size="icon" on:click={() => handleUpvote(product.id)}>
 										<ArrowUp class="h-4 w-4" />
 									</Button>
 									<span class="mt-1 text-sm font-medium">{product.upvotes}</span>
@@ -167,14 +183,14 @@
 								<div>
 									<h2 class="text-lg font-semibold">{product.name}</h2>
 									<p class="text-sm text-muted-foreground">
-										Released: {product.releaseDate.toLocaleDateString()}
+										Time left: {getRemainingTime(product.uploadDate)}
 									</p>
 									<p class="mt-2 text-sm">{product.description}</p>
 								</div>
 							</div>
 						</CardContent>
 						<CardFooter>
-							<Button variant="outline" class="w-full" href={`/voting_item/${product.id}`}>
+							<Button variant="outline" class="w-full" href={`/product_item/${product.id}`}>
 								<ExternalLink class="mr-2 h-4 w-4" />
 								View Product
 							</Button>
