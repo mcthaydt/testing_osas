@@ -107,7 +107,7 @@
 			Asset Store for Open Source Game Engines
 		</h1>
 		<p class="mb-8 text-lg">
-			Access high-quality, free and paid assets to bring your game vision to life
+			Access high-quality, free and paid game assets to bring your vision to life
 		</p>
 		<div class="mx-auto mb-12 max-w-[425px] rounded-xl">
 			<AspectRatio ratio={16 / 9} class="rounded-xl bg-muted">
