@@ -75,7 +75,7 @@
 				bind:value={searchTerm}
 			/>
 		</div>
-		<div class="flex flex-col space-y-2 md:flex-row lg:space-x-2 lg:space-y-0">
+		<div class="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
 			<Select.Root bind:selected={selectedCategory}>
 				<Select.Trigger class="w-full sm:w-[180px]">
 					<Select.Value placeholder="Select category" />

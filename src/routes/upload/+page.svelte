@@ -54,7 +54,8 @@
 		changelog: [],
 		engineVersions: [],
 		voters: [],
-		assetDeveloper: ''
+		assetDeveloper: '',
+		files: []
 	};
 
 	let images: (File | null)[] = [null, null, null];
@@ -63,6 +64,7 @@
 	let hasCollaborators = false;
 	let collaborators: { email: string; revenueSplit: number }[] = [];
 	let showSuccessDialog = false;
+	let productFiles: File[] = [];
 
 	const platformFee = 8; // 8% platform fee
 
@@ -105,7 +107,15 @@
 					version: product.engineVersion || 'Not specified',
 					releaseDate: product.releaseDate
 				}
-			]
+			],
+			files: productFiles.map((file, index) => ({
+				id: `${nextId}-file-${index}`,
+				filename: file.name,
+				fileSize: file.size,
+				fileType: file.type,
+				downloadUrl: URL.createObjectURL(file),
+				version: product.version || '1.0.0'
+			}))
 		};
 
 		addProduct(newProduct, product.assetDeveloper || 'Anonymous');
@@ -132,6 +142,17 @@
 		if (target.files) {
 			video = target.files[0];
 		}
+	}
+
+	function handleProductFileChange(event: Event) {
+		const target = event.target as HTMLInputElement;
+		if (target.files) {
+			productFiles = [...productFiles, ...Array.from(target.files)];
+		}
+	}
+
+	function removeProductFile(index: number) {
+		productFiles = productFiles.filter((_, i) => i !== index);
 	}
 
 	function addCollaborator() {
@@ -220,6 +241,36 @@
 						<video src={getPreviewUrl(video)} controls class="mt-2 h-40"></video>
 					{/if}
 				</div>
+
+				<!-- Product Files Section -->
+				<h3 class="text-xl font-semibold">Product Files</h3>
+				<div class="space-y-2">
+					<Label for="productFiles">Upload Product Files</Label>
+					<Input
+						id="productFiles"
+						type="file"
+						on:change={handleProductFileChange}
+						multiple
+						accept="*/*"
+					/>
+				</div>
+				{#if productFiles.length > 0}
+					<div class="space-y-2">
+						<h4 class="text-lg font-semibold">Uploaded Files:</h4>
+						{#each productFiles as file, index}
+							<div class="flex items-center justify-between">
+								<span>{file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+								<Button
+									type="button"
+									variant="destructive"
+									on:click={() => removeProductFile(index)}
+								>
+									Remove
+								</Button>
+							</div>
+						{/each}
+					</div>
+				{/if}
 
 				<div class="space-y-2">
 					<Label for="category">Category</Label>

@@ -30,7 +30,7 @@
 				<ShoppingCart size={24} />
 				{#if cartItemCount > 0}
 					<span
-						class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white"
+						class="absolute -right-2 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-muted-foreground text-xs font-bold text-stone-900"
 						in:fly={{ y: -10, duration: 200 }}
 						out:fly={{ y: -10, duration: 200 }}
 					>

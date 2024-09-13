@@ -4,24 +4,20 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import { Plus, Minus, Trash2, ExternalLink } from 'lucide-svelte';
 	import { cartStore, type CartItem } from '$lib/stores/cartStore';
-
 	let cartItems: CartItem[] = [];
 	let subtotal = 0;
 	let tax = 0;
 	let total = 0;
-
 	// Subscribe to the cartStore
 	cartStore.subscribe((items) => {
 		cartItems = items;
 		calculateTotals();
 	});
-
 	function calculateTotals() {
 		subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 		tax = subtotal * 0.08; // Assuming 8% tax
 		total = subtotal + tax;
 	}
-
 	function updateQuantity(id: string, change: number) {
 		const item = cartItems.find((item) => item.id === id);
 		if (item) {
@@ -29,7 +25,6 @@
 			cartStore.updateQuantity(id, newQuantity);
 		}
 	}
-
 	function removeItem(id: string) {
 		cartStore.removeItem(id);
 	}
@@ -40,9 +35,11 @@
 	<div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
 		<div class="lg:col-span-2">
 			{#each cartItems as item (item.id)}
-				<div class="flex items-center space-x-4 border-b border-gray-700 py-4">
+				<div
+					class="flex flex-col items-center border-b border-gray-700 py-4 sm:flex-row sm:items-start"
+				>
 					<img src={item.imageUrl} alt={item.name} class="h-24 w-24 rounded-md object-cover" />
-					<div class="flex-grow">
+					<div class="mt-4 flex-grow text-center sm:ml-4 sm:mt-0 sm:text-left">
 						<h3 class="text-lg font-semibold">{item.name}</h3>
 						<p class="text-sm text-gray-400">{item.category}</p>
 						<a
@@ -52,34 +49,38 @@
 							View Product <ExternalLink class="ml-1 h-3 w-3" />
 						</a>
 					</div>
-					<div class="flex items-center space-x-2">
+					<div
+						class="mt-4 flex flex-col items-center space-y-2 sm:mt-0 sm:flex-row sm:items-start sm:space-x-4 sm:space-y-0"
+					>
+						<div class="flex items-center space-x-2">
+							<Button
+								variant="outline"
+								size="icon"
+								on:click={() => updateQuantity(item.id, -1)}
+								class="border-gray-600 text-white hover:bg-gray-700"
+							>
+								<Minus class="h-4 w-4" />
+							</Button>
+							<span class="w-8 text-center">{item.quantity}</span>
+							<Button
+								variant="outline"
+								size="icon"
+								on:click={() => updateQuantity(item.id, 1)}
+								class="border-gray-600 text-white hover:bg-gray-700"
+							>
+								<Plus class="h-4 w-4" />
+							</Button>
+						</div>
+						<p class="font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
 						<Button
-							variant="outline"
+							variant="ghost"
 							size="icon"
-							on:click={() => updateQuantity(item.id, -1)}
-							class="border-gray-600 text-white hover:bg-gray-700"
+							on:click={() => removeItem(item.id)}
+							class="text-red-400 hover:bg-gray-800 hover:text-red-300"
 						>
-							<Minus class="h-4 w-4" />
-						</Button>
-						<span class="w-8 text-center">{item.quantity}</span>
-						<Button
-							variant="outline"
-							size="icon"
-							on:click={() => updateQuantity(item.id, 1)}
-							class="border-gray-600 text-white hover:bg-gray-700"
-						>
-							<Plus class="h-4 w-4" />
+							<Trash2 class="h-4 w-4" />
 						</Button>
 					</div>
-					<p class="font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
-					<Button
-						variant="ghost"
-						size="icon"
-						on:click={() => removeItem(item.id)}
-						class="text-red-400 hover:bg-gray-800 hover:text-red-300"
-					>
-						<Trash2 class="h-4 w-4" />
-					</Button>
 				</div>
 			{/each}
 		</div>
@@ -119,4 +120,3 @@
 		</div>
 	</div>
 </div>
-

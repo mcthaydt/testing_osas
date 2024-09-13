@@ -63,7 +63,7 @@
 </script>
 
 <aside
-	class="fixed left-0 top-16 z-10 h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden rounded-md bg-background shadow-lg transition-all duration-300 ease-in-out"
+	class="fixed left-0 top-16 z-10 h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden rounded-md bg-background shadow-sm transition-all duration-300 ease-in-out"
 	class:w-16={!isExpanded}
 	class:w-64={isExpanded}
 	on:mouseenter={handleMouseEnter}

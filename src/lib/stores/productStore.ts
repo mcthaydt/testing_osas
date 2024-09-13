@@ -23,6 +23,16 @@ export interface EngineVersion {
     releaseDate: string;
 }
 
+
+export interface ProductFile {
+    id: string;
+    filename: string;
+    fileSize: number; // in bytes
+    fileType: string;
+    downloadUrl: string;
+    version: string;
+}
+
 export interface Product {
     id: string;
     name: string;
@@ -46,9 +56,10 @@ export interface Product {
     version: string;
     reviews: Review[];
     changelog: ChangelogEntry[];
-    engineVersions: EngineVersion[];
-    voters: string[]; // Added voters array
-    assetDeveloper: string; // Added asset developer
+    engineVersions: EngineVersion[];   
+    voters: string[];
+    assetDeveloper: string; 
+    files: ProductFile[];
 }
 
 const initialProducts: Product[] = [
@@ -106,7 +117,8 @@ const initialProducts: Product[] = [
         ],
         engineVersions: [{ version: '1.0.0', releaseDate: '2023-05-15' }],
         voters: ['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8', 'user9', 'user10'], // Fake voters
-        assetDeveloper: 'developer1' // Fake asset developer
+        assetDeveloper: 'developer1',
+        files: []
     },
     {
         id: 'godot-1',
@@ -160,7 +172,8 @@ const initialProducts: Product[] = [
         ],
         engineVersions: [{ version: '4.0', releaseDate: '2023-05-15' }],
         voters: ['user11', 'user12', 'user13', 'user14', 'user15', 'user16', 'user17', 'user18', 'user19', 'user20', 'user21', 'user22', 'user23', 'user24', 'user25'], // Fake voters
-        assetDeveloper: 'developer2' // Fake asset developer
+        assetDeveloper: 'developer2',
+        files: []
     },
     {
         id: 'godot-2',
@@ -187,7 +200,8 @@ const initialProducts: Product[] = [
         changelog: [],
         engineVersions: [{ version: '4.0', releaseDate: '2023-06-01' }],
         voters: ['user26', 'user27', 'user28', 'user29', 'user30', 'user31', 'user32', 'user33'], // Fake voters
-        assetDeveloper: 'developer3' // Fake asset developer
+        assetDeveloper: 'developer3',
+        files: [] 
     },
     {
         id: 'general-1',
@@ -224,7 +238,8 @@ const initialProducts: Product[] = [
         ],
         engineVersions: [],
         voters: ['user34', 'user35', 'user36', 'user37', 'user38', 'user39', 'user40', 'user41', 'user42', 'user43', 'user44', 'user45'], // Fake voters
-        assetDeveloper: 'developer4' // Fake asset developer
+        assetDeveloper: 'developer4',
+        files: []
     },
     {
         id: 'other-engines-1',
@@ -262,7 +277,8 @@ const initialProducts: Product[] = [
         ],
         engineVersions: [],
         voters: ['user46', 'user47', 'user48', 'user49', 'user50', 'user51', 'user52', 'user53', 'user54', 'user55', 'user56', 'user57', 'user58', 'user59', 'user60', 'user61', 'user62', 'user63', 'user64', 'user65'], // Fake voters
-        assetDeveloper: 'developer5' // Fake asset developer
+        assetDeveloper: 'developer5',
+        files: []
     }
 ];
 
@@ -275,17 +291,14 @@ export function upvote(id: string, userId: string): void {
     products.update(currentProducts => {
         const updatedProducts = currentProducts.map(product => {
             if (product.id === id && !product.voters.includes(userId)) {
-                console.log('Upvoting product:', product.name);
                 const newUpvotes = product.upvotes + 1;
                 const newStatus = newUpvotes >= UPVOTE_THRESHOLD ? 'approved' : product.status;
                 const newVoters = [...product.voters, userId];
-                console.log('New upvotes:', newUpvotes, 'New status:', newStatus);
                 return { ...product, upvotes: newUpvotes, status: newStatus, voters: newVoters };
             }
             return product;
         });
 
-        console.log('Updated products:', updatedProducts);
         return updatedProducts;
     });
 }
@@ -295,18 +308,18 @@ export function getProduct(id: string): Product | undefined {
 }
 
 export function getProductsByEngine(engine: string, includeUnapproved: boolean = false): Product[] {
-    return initialProducts.filter(p => 
+    return get(products).filter(p => 
         p.engine === engine && (includeUnapproved || p.status === 'approved')
     );
 }
 
 export function getProductsByTag(tag: string, includeUnapproved: boolean = false): Product[] {
-    return initialProducts.filter(p => 
+    return get(products).filter(p => 
         p.tags.includes(tag) && (includeUnapproved || p.status === 'approved')
     );
 }
 
-export function addProduct(product: Omit<Product, 'id' | 'upvotes' | 'status' | 'uploadDate' | 'rating' | 'reviews' | 'changelog' | 'voters' | 'assetDeveloper'>, assetDeveloper: string): void {
+export function addProduct(product: Omit<Product, 'id' | 'upvotes' | 'status' | 'uploadDate' | 'rating' | 'reviews' | 'changelog' | 'voters' | 'assetDeveloper' | 'files'>, assetDeveloper: string): void {
     const newId = `${product.engine.toLowerCase()}-${Date.now()}`;
     const newProduct: Product = { 
         ...product, 
@@ -323,30 +336,22 @@ export function addProduct(product: Omit<Product, 'id' | 'upvotes' | 'status' | 
         }],
         engineVersions: product.engineVersions || [],
         voters: [],
-        assetDeveloper
+        assetDeveloper,
+        files: []
     };
-    console.log('New product being added:', newProduct);
     products.update(currentProducts => [...currentProducts, newProduct]);
 }
 
 export function updateProduct(id: string, updates: Partial<Product>): void {
-    const index = initialProducts.findIndex(p => p.id === id);
-    if (index !== -1) {
-        initialProducts[index] = { ...initialProducts[index], ...updates };
-        products.update(currentProducts => 
-            currentProducts.map(p => p.id === id ? { ...p, ...updates } : p)
-        );
-    }
+    products.update(currentProducts => 
+        currentProducts.map(p => p.id === id ? { ...p, ...updates } : p)
+    );
 }
 
 export function deleteProduct(id: string): void {
-    const index = initialProducts.findIndex(p => p.id === id);
-    if (index !== -1) {
-        initialProducts.splice(index, 1);
-        products.update(currentProducts => 
-            currentProducts.filter(p => p.id !== id)
-        );
-    }
+    products.update(currentProducts => 
+        currentProducts.filter(p => p.id !== id)
+    );
 }
 
 export function checkAndApproveProducts(): void {
@@ -368,7 +373,7 @@ export function checkAndApproveProducts(): void {
 
 export function getPendingProducts(): Product[] {
     const currentDate = new Date();
-    return initialProducts.filter(p => {
+    return get(products).filter(p => {
         if (p.status === 'pending') {
             const uploadDate = new Date(p.uploadDate);
             const daysSinceUpload = (currentDate.getTime() - uploadDate.getTime()) / (1000 * 3600 * 24);
@@ -380,7 +385,7 @@ export function getPendingProducts(): Product[] {
 
 export function getProductsNearingDeadline(): Product[] {
     const currentDate = new Date();
-    return initialProducts.filter(p => {
+    return get(products).filter(p => {
         if (p.status === 'pending') {
             const uploadDate = new Date(p.uploadDate);
             const daysSinceUpload = (currentDate.getTime() - uploadDate.getTime()) / (1000 * 3600 * 24);
@@ -392,11 +397,11 @@ export function getProductsNearingDeadline(): Product[] {
 }
 
 export function getApprovedProducts(): Product[] {
-    return initialProducts.filter(p => p.status === 'approved');
+    return get(products).filter(p => p.status === 'approved');
 }
 
 export function getRejectedProducts(): Product[] {
-    return initialProducts.filter(p => p.status === 'rejected');
+    return get(products).filter(p => p.status === 'rejected');
 }
 
 export function addReview(productId: string, review: Review): void {
@@ -418,6 +423,44 @@ export function addChangelogEntry(productId: string, entry: ChangelogEntry): voi
             if (product.id === productId) {
                 const newChangelog = [entry, ...product.changelog];
                 return { ...product, changelog: newChangelog, version: entry.version };
+            }
+            return product;
+        })
+    );
+}
+
+export function addProductFile(productId: string, file: Omit<ProductFile, 'id'>): void {
+    products.update(currentProducts => 
+        currentProducts.map(product => {
+            if (product.id === productId) {
+                const newFileId = `${productId}-file-${Date.now()}`;
+                const newFile: ProductFile = { ...file, id: newFileId };
+                return { ...product, files: [...product.files, newFile] };
+            }
+            return product;
+        })
+    );
+}
+
+export function removeProductFile(productId: string, fileId: string): void {
+    products.update(currentProducts => 
+        currentProducts.map(product => {
+            if (product.id === productId) {
+                return { ...product, files: product.files.filter(f => f.id !== fileId) };
+            }
+            return product;
+        })
+    );
+}
+
+export function updateProductFile(productId: string, fileId: string, updates: Partial<ProductFile>): void {
+    products.update(currentProducts => 
+        currentProducts.map(product => {
+            if (product.id === productId) {
+                return {
+                    ...product,
+                    files: product.files.map(f => f.id === fileId ? { ...f, ...updates } : f)
+                };
             }
             return product;
         })
