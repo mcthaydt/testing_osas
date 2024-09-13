@@ -101,7 +101,7 @@
 			</Select.Root>
 			<Select.Root bind:selected={selectedEngineVersion}>
 				<Select.Trigger class="w-full sm:w-[180px]">
-					<Select.Value placeholder="ngine version" />
+					<Select.Value placeholder="Engine version" />
 				</Select.Trigger>
 				<Select.Content>
 					<Select.Item value="All">All</Select.Item>
