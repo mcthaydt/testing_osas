@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { ShoppingCart, Upload } from 'lucide-svelte';
+	import { ShoppingCart, Upload, PersonStanding, Database } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 	import { fly } from 'svelte/transition';
 	import { cartStore } from '$lib/stores/cartStore'; // Assume we have a cartStore
@@ -20,8 +20,12 @@
 	<a href="/" class="text-xl font-bold text-primary">OSAS</a>
 	<div class="flex items-center gap-4">
 		<div class="flex gap-4">
-			<Button>Test DB</Button>
-			<Button>Test PF</Button>
+			<Button on:click={() => goto('/dashboard')}>
+				<Database size={24} />
+			</Button>
+			<Button on:click={() => goto('/profile')}>
+				<PersonStanding size={24} />
+			</Button>
 			<button
 				class="relative text-primary hover:text-slate-800"
 				aria-label="Shopping Cart"

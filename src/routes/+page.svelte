@@ -225,8 +225,10 @@
 	</section>
 
 	<section class="cta mb-12 rounded-lg bg-primary-foreground p-16 text-center">
-		<h2 class="mb-4 text-3xl font-bold">Any Questions?</h2>
-		<p class="mb-8">For Frequently Asked Questions, Legal Information, and Community</p>
+		<h2 class="mb-4 text-3xl font-bold text-secondary">Any Questions?</h2>
+		<p class="mb-8 text-secondary">
+			For Frequently Asked Questions, Legal Information, and Community
+		</p>
 		<a href="support/">
 			<Button variant="outline" size="lg">Visit Support</Button>
 		</a>
