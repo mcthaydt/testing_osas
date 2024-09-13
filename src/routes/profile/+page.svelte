@@ -110,11 +110,13 @@
 	}
 </script>
 
-<div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+<div class="container mx-auto px-4 py-8">
 	<div class="relative">
-		<div class="h-48 w-full rounded-t-lg bg-gradient-to-r from-blue-500 to-purple-600"></div>
-		<div class="absolute bottom-0 left-8 translate-y-1/2 transform">
-			<Avatar class="h-32 w-32 border-4 border-white">
+		<div
+			class="h-32 w-full rounded-t-lg bg-gradient-to-r from-blue-500 to-purple-600 sm:h-48"
+		></div>
+		<div class="absolute bottom-0 left-4 translate-y-1/2 transform sm:left-8">
+			<Avatar class="h-24 w-24 border-4 border-white sm:h-32 sm:w-32">
 				<AvatarImage src={user.avatar} alt={user.username} />
 				<AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
 			</Avatar>
@@ -122,17 +124,23 @@
 	</div>
 
 	<div class="mt-16 pb-4 sm:mt-20">
-		<div class="flex items-start justify-between">
+		<div class="flex flex-col sm:flex-row sm:items-start sm:justify-between">
 			<div>
-				<h1 class="text-3xl font-bold text-gray-900">{user.username}</h1>
-				<p class="mt-1 text-lg text-gray-500">{user.bio}</p>
+				<h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">{user.username}</h1>
+				<p class="mt-1 text-base text-gray-500 sm:text-lg">{user.bio}</p>
 			</div>
-			<div class="flex items-center space-x-4">
-				<Button variant="outline" on:click={toggleViewMode}>
+			<div
+				class="mt-4 flex flex-col items-start space-y-2 sm:mt-0 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0"
+			>
+				<Button variant="outline" class="w-full sm:w-auto" on:click={toggleViewMode}>
 					{viewMode === 'seller' ? 'Switch to Buyer View' : 'Switch to Seller View'}
 				</Button>
 				{#if !isCurrentUser}
-					<Button variant={isFollowing ? 'outline' : 'default'} on:click={handleFollow}>
+					<Button
+						variant={isFollowing ? 'outline' : 'default'}
+						class="w-full sm:w-auto"
+						on:click={handleFollow}
+					>
 						{isFollowing ? 'Unfollow' : 'Follow'}
 					</Button>
 				{/if}
@@ -143,8 +151,11 @@
 			{#if user.website}
 				<div class="flex items-center text-gray-600">
 					<Globe class="mr-2 h-5 w-5" />
-					<a href={user.website} target="_blank" rel="noopener noreferrer" class="hover:underline"
-						>{user.website}</a
+					<a
+						href={user.website}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="max-w-[200px] truncate hover:underline">{user.website}</a
 					>
 				</div>
 			{/if}
@@ -248,7 +259,7 @@
 		</div>
 	</div>
 	<Tabs defaultValue={viewMode === 'seller' ? 'portfolio' : 'purchases'} class="mt-8">
-		<TabsList class="grid w-full grid-cols-4">
+		<TabsList class="grid w-full grid-cols-2 sm:grid-cols-4">
 			{#if viewMode === 'seller'}
 				<TabsTrigger value="portfolio">Portfolio</TabsTrigger>
 				<TabsTrigger value="reviews">Reviews</TabsTrigger>
@@ -268,7 +279,7 @@
 						<CardDescription>Showcase of {user.username}'s published assets</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+						<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 							{#each userAssets as asset}
 								<Card>
 									<img
@@ -277,8 +288,8 @@
 										class="h-48 w-full rounded-t-lg object-cover"
 									/>
 									<CardHeader>
-										<CardTitle>{asset.name}</CardTitle>
-										<CardDescription>{asset.description}</CardDescription>
+										<CardTitle class="text-lg">{asset.name}</CardTitle>
+										<CardDescription class="text-sm">{asset.description}</CardDescription>
 									</CardHeader>
 									<CardContent>
 										<div class="flex items-center justify-between">
@@ -342,7 +353,7 @@
 						<CardDescription>Assets {user.username} has recently bought</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+						<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 							{#each purchasedAssets as asset}
 								<Card>
 									<img
@@ -351,8 +362,8 @@
 										class="h-48 w-full rounded-t-lg object-cover"
 									/>
 									<CardHeader>
-										<CardTitle>{asset.name}</CardTitle>
-										<CardDescription>{asset.description}</CardDescription>
+										<CardTitle class="text-lg">{asset.name}</CardTitle>
+										<CardDescription class="text-sm">{asset.description}</CardDescription>
 									</CardHeader>
 									<CardContent>
 										<div class="flex items-center justify-between">
@@ -365,10 +376,10 @@
 											</p>
 										</div>
 									</CardContent>
-									<CardFooter class="flex justify-between">
-										<Button class="w-1/2">View Asset</Button>
+									<CardFooter class="flex flex-col gap-2 sm:flex-row">
+										<Button class="w-full sm:w-1/2">View Asset</Button>
 										<Button
-											class="ml-2 w-1/2"
+											class="w-full sm:w-1/2"
 											variant="outline"
 											on:click={() => handleTip(asset.id)}
 										>
@@ -447,9 +458,9 @@
 							{#each userAssets as asset}
 								<div class="mb-4">
 									<div class="flex items-center">
-										<ShoppingCart class="mr-3 h-5 w-5 text-green-500" />
-										<div>
-											<p class="font-semibold">New asset published: {asset.name}</p>
+										<ShoppingCart class="mr-3 h-5 w-5 flex-shrink-0 text-green-500" />
+										<div class="min-w-0 flex-grow">
+											<p class="truncate font-semibold">{asset.name}</p>
 											<p class="text-sm text-gray-500">{formatDate(asset.uploadDate)}</p>
 										</div>
 									</div>
@@ -460,9 +471,9 @@
 							{#each purchasedAssets as asset}
 								<div class="mb-4">
 									<div class="flex items-center">
-										<Tag class="mr-3 h-5 w-5 text-blue-500" />
-										<div>
-											<p class="font-semibold">Purchased asset: {asset.name}</p>
+										<Tag class="mr-3 h-5 w-5 flex-shrink-0 text-blue-500" />
+										<div class="min-w-0 flex-grow">
+											<p class="truncate font-semibold">{asset.name}</p>
 											<p class="text-sm text-gray-500">{formatDate(asset.purchaseDate)}</p>
 										</div>
 									</div>
@@ -477,8 +488,8 @@
 	</Tabs>
 
 	<div class="mt-8">
-		<h2 class="mb-4 text-2xl font-bold">Followers and Following</h2>
-		<div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+		<h2 class="mb-4 text-xl font-bold sm:text-2xl">Followers and Following</h2>
+		<div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
 			<Card>
 				<CardHeader>
 					<CardTitle>Followers ({user.followers.length})</CardTitle>
@@ -487,11 +498,11 @@
 					<ScrollArea class="h-[200px]">
 						{#each user.followers as followerId}
 							<div class="mb-4 flex items-center">
-								<Avatar class="mr-3 h-10 w-10">
+								<Avatar class="mr-3 h-10 w-10 flex-shrink-0">
 									<AvatarFallback>{followerId[0].toUpperCase()}</AvatarFallback>
 								</Avatar>
-								<div>
-									<p class="font-semibold">{followerId}</p>
+								<div class="min-w-0 flex-grow">
+									<p class="truncate font-semibold">{followerId}</p>
 									<p class="text-sm text-gray-500">Follower</p>
 								</div>
 							</div>
@@ -507,11 +518,11 @@
 					<ScrollArea class="h-[200px]">
 						{#each user.following as followingId}
 							<div class="mb-4 flex items-center">
-								<Avatar class="mr-3 h-10 w-10">
+								<Avatar class="mr-3 h-10 w-10 flex-shrink-0">
 									<AvatarFallback>{followingId[0].toUpperCase()}</AvatarFallback>
 								</Avatar>
-								<div>
-									<p class="font-semibold">{followingId}</p>
+								<div class="min-w-0 flex-grow">
+									<p class="truncate font-semibold">{followingId}</p>
 									<p class="text-sm text-gray-500">Following</p>
 								</div>
 							</div>

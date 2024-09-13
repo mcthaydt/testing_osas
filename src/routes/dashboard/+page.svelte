@@ -109,35 +109,37 @@
 	}
 </script>
 
-<div class="container mx-auto px-4 py-8">
-	<h1 class="mb-6 text-3xl font-bold">Seller Dashboard</h1>
+<div class="container mx-auto max-w-full overflow-x-hidden px-2 py-4 sm:px-4 sm:py-8">
+	<h1 class="mb-4 text-2xl font-bold sm:mb-6 sm:text-3xl">Seller Dashboard</h1>
 
-	<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+	<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
 		<Card>
 			<CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-				<CardTitle class="text-sm font-medium">Total Downloads</CardTitle>
+				<CardTitle class="text-sm font-medium">Downloads</CardTitle>
 				<Download class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">{totalDownloads.toLocaleString()}</div>
+				<div class="text-lg font-bold sm:text-xl lg:text-2xl">
+					{totalDownloads.toLocaleString()}
+				</div>
 			</CardContent>
 		</Card>
 		<Card>
 			<CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-				<CardTitle class="text-sm font-medium">Total Revenue</CardTitle>
+				<CardTitle class="text-sm font-medium">Revenue</CardTitle>
 				<DollarSign class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">{formatCurrency(totalRevenue)}</div>
+				<div class="text-lg font-bold sm:text-xl lg:text-2xl">{formatCurrency(totalRevenue)}</div>
 			</CardContent>
 		</Card>
 		<Card>
 			<CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-				<CardTitle class="text-sm font-medium">Active Assets</CardTitle>
+				<CardTitle class="text-sm font-medium">Assets</CardTitle>
 				<Package class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">{activeAssets}</div>
+				<div class="text-lg font-bold sm:text-xl lg:text-2xl">{activeAssets}</div>
 			</CardContent>
 		</Card>
 		<Card>
@@ -146,60 +148,71 @@
 				<Bell class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">{notifications.length}</div>
+				<div class="text-lg font-bold sm:text-xl lg:text-2xl">{notifications.length}</div>
 			</CardContent>
 		</Card>
 	</div>
 
-	<div class="mt-8">
+	<div class="mt-6 sm:mt-8">
 		<Card>
 			<CardHeader>
-				<CardTitle>Sales & Revenue Overview</CardTitle>
+				<CardTitle class="text-lg sm:text-xl">Sales & Revenue Overview</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<canvas bind:this={chartCanvas}></canvas>
+				<div class="max-w-full overflow-hidden">
+					<canvas bind:this={chartCanvas}></canvas>
+				</div>
 			</CardContent>
 		</Card>
 	</div>
 
-	<Tabs defaultValue="assets" class="mt-8">
-		<TabsList>
-			<TabsTrigger value="assets">Asset Management</TabsTrigger>
-			<TabsTrigger value="analytics">Analytics</TabsTrigger>
-			<TabsTrigger value="sales">Sales & Revenue</TabsTrigger>
-			<TabsTrigger value="community">Community</TabsTrigger>
+	<Tabs defaultValue="assets" class="mt-6 sm:mt-8">
+		<TabsList class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+			<TabsTrigger value="assets" class="text-sm">Assets</TabsTrigger>
+			<TabsTrigger value="analytics" class="text-sm">Analytics</TabsTrigger>
+			<TabsTrigger value="sales" class="text-sm">Sales</TabsTrigger>
+			<TabsTrigger value="community" class="text-sm">Community</TabsTrigger>
 		</TabsList>
 
 		<TabsContent value="assets">
 			<Card>
 				<CardHeader>
-					<CardTitle>Asset Management</CardTitle>
+					<CardTitle class="text-lg sm:text-xl">Asset Management</CardTitle>
 					<CardDescription>Manage your published assets</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<div class="mb-4">
-						<Button on:click={() => goto('upload/')}>Upload New Asset</Button>
+						<Button on:click={() => goto('upload/')} class="w-full sm:w-auto"
+							>Upload New Asset</Button
+						>
 					</div>
 					<div class="space-y-4">
 						{#each userAssets as asset}
-							<div class="flex items-center justify-between rounded-lg border p-4">
-								<div class="flex items-center space-x-4">
+							<div
+								class="flex flex-col items-start justify-between rounded-lg border p-3 sm:flex-row sm:items-center sm:p-4"
+							>
+								<div class="mb-3 flex items-center space-x-3 sm:mb-0 sm:space-x-4">
 									<img
 										src={asset.imageUrl}
 										alt={asset.name}
-										class="h-16 w-16 rounded object-cover"
+										class="h-12 w-12 rounded object-cover sm:h-16 sm:w-16"
 									/>
 									<div>
-										<h3 class="text-lg font-semibold">{asset.name}</h3>
-										<p class="text-sm text-gray-500">{asset.description}</p>
+										<h3 class="text-base font-semibold sm:text-lg">{asset.name}</h3>
+										<p class="text-xs text-gray-500 sm:text-sm">{asset.description}</p>
 									</div>
 								</div>
-								<div class="flex items-center space-x-2">
-									<Badge variant={asset.status === 'approved' ? 'default' : 'secondary'}>
+								<div class="flex w-full flex-wrap gap-2 sm:w-auto">
+									<Badge
+										variant={asset.status === 'approved' ? 'default' : 'secondary'}
+										class="text-xs"
+									>
 										{asset.status}
 									</Badge>
-									<Button variant="outline" size="sm">Edit</Button>
-									<Button variant="outline" size="sm">Manage Versions</Button>
+									<Button variant="outline" size="sm" class="w-full text-xs sm:w-auto">Edit</Button>
+									<Button variant="outline" size="sm" class="w-full text-xs sm:w-auto"
+										>Manage Versions</Button
+									>
 								</div>
 							</div>
 						{/each}
@@ -211,46 +224,52 @@
 		<TabsContent value="analytics">
 			<Card>
 				<CardHeader>
-					<CardTitle>Asset Analytics</CardTitle>
+					<CardTitle class="text-lg sm:text-xl">Asset Analytics</CardTitle>
 					<CardDescription>Detailed statistics about your assets' performance</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<div class="space-y-8">
-						<div>
-							<h3 class="mb-4 text-xl font-semibold">Geographic Distribution</h3>
-							<table class="w-full">
-								<thead>
-									<tr>
-										<th class="text-left">Country</th>
-										<th class="text-right">Downloads</th>
-										<th class="text-right">Revenue</th>
-									</tr>
-								</thead>
-								<tbody>
-									{#each geographicData as data}
+					<div class="space-y-6 sm:space-y-8">
+						<div class="overflow-x-auto">
+							<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">
+								Geographic Distribution
+							</h3>
+							<div class="w-full overflow-x-auto">
+								<table class="w-full min-w-[300px]">
+									<thead>
 										<tr>
-											<td>{data.country}</td>
-											<td class="text-right">{data.downloads}</td>
-											<td class="text-right">{formatCurrency(data.revenue)}</td>
+											<th class="text-left text-xs sm:text-sm">Country</th>
+											<th class="text-right text-xs sm:text-sm">Downloads</th>
+											<th class="text-right text-xs sm:text-sm">Revenue</th>
 										</tr>
-									{/each}
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										{#each geographicData as data}
+											<tr>
+												<td class="text-xs sm:text-sm">{data.country}</td>
+												<td class="text-right text-xs sm:text-sm">{data.downloads}</td>
+												<td class="text-right text-xs sm:text-sm">{formatCurrency(data.revenue)}</td
+												>
+											</tr>
+										{/each}
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<div>
-							<h3 class="mb-4 text-xl font-semibold">User Engagement</h3>
-							<!-- Add user engagement charts or metrics here -->
-							<p>User engagement metrics and visualizations to be implemented here.</p>
+							<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">User Engagement</h3>
+							<p class="text-xs sm:text-sm">
+								User engagement metrics and visualizations to be implemented here.
+							</p>
 						</div>
 						<div>
-							<h3 class="mb-4 text-xl font-semibold">Download Trends</h3>
-							<!-- Add download trends chart here -->
-							<p>Download trends chart to be implemented here.</p>
+							<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">Download Trends</h3>
+							<p class="text-xs sm:text-sm">Download trends chart to be implemented here.</p>
 						</div>
 						<div>
-							<h3 class="mb-4 text-xl font-semibold">Asset Performance Comparison</h3>
-							<!-- Add asset performance comparison chart or table here -->
-							<p>Asset performance comparison to be implemented here.</p>
+							<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">
+								Asset Performance Comparison
+							</h3>
+							<p class="text-xs sm:text-sm">Asset performance comparison to be implemented here.</p>
 						</div>
 					</div>
 				</CardContent>
@@ -260,51 +279,56 @@
 		<TabsContent value="sales">
 			<Card>
 				<CardHeader>
-					<CardTitle>Sales & Revenue</CardTitle>
+					<CardTitle class="text-lg sm:text-xl">Sales & Revenue</CardTitle>
 					<CardDescription>Track your sales and manage payments</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<div class="space-y-8">
-						<div>
-							<h3 class="mb-4 text-xl font-semibold">Recent Sales</h3>
-							<table class="w-full">
-								<thead>
-									<tr>
-										<th class="text-left">Date</th>
-										<th class="text-left">Asset</th>
-										<th class="text-right">Amount</th>
-										<th class="text-right">Status</th>
-									</tr>
-								</thead>
-								<tbody>
-									{#each salesHistory as sale}
+					<div class="space-y-6 sm:space-y-8">
+						<div class="overflow-x-auto">
+							<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">Recent Sales</h3>
+							<div class="w-full overflow-x-auto">
+								<table class="w-full min-w-[300px]">
+									<thead>
 										<tr>
-											<td>{sale.date}</td>
-											<td>{sale.asset}</td>
-											<td class="text-right">{formatCurrency(sale.amount)}</td>
-											<td class="text-right">
-												<Badge variant={sale.status === 'completed' ? 'default' : 'secondary'}>
-													{sale.status}
-												</Badge>
-											</td>
+											<th class="text-left text-xs sm:text-sm">Date</th>
+											<th class="text-left text-xs sm:text-sm">Asset</th>
+											<th class="text-right text-xs sm:text-sm">Amount</th>
+											<th class="text-right text-xs sm:text-sm">Status</th>
 										</tr>
-									{/each}
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										{#each salesHistory as sale}
+											<tr>
+												<td class="text-xs sm:text-sm">{sale.date}</td>
+												<td class="text-xs sm:text-sm">{sale.asset}</td>
+												<td class="text-right text-xs sm:text-sm">{formatCurrency(sale.amount)}</td>
+												<td class="text-right">
+													<Badge
+														variant={sale.status === 'completed' ? 'default' : 'secondary'}
+														class="text-xs"
+													>
+														{sale.status}
+													</Badge>
+												</td>
+											</tr>
+										{/each}
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<div>
-							<h3 class="mb-4 text-xl font-semibold">Revenue Summary</h3>
-							<!-- Add revenue summary chart or breakdown here -->
-							<p>Revenue summary visualization to be implemented here.</p>
+							<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">Revenue Summary</h3>
+							<p class="text-xs sm:text-sm">
+								Revenue summary visualization to be implemented here.
+							</p>
 						</div>
 						<div>
-							<h3 class="mb-4 text-xl font-semibold">Payout History</h3>
-							<!-- Add payout history table or chart here -->
-							<p>Payout history to be implemented here.</p>
+							<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">Payout History</h3>
+							<p class="text-xs sm:text-sm">Payout history to be implemented here.</p>
 						</div>
 						<div>
-							<h3 class="mb-4 text-xl font-semibold">Payment Settings</h3>
-							<Button variant="outline">
+							<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">Payment Settings</h3>
+							<Button variant="outline" class="w-full text-xs sm:w-auto sm:text-sm">
 								<Settings class="mr-2 h-4 w-4" />
 								Manage Payout Methods
 							</Button>
@@ -317,93 +341,105 @@
 		<TabsContent value="community">
 			<Card>
 				<CardHeader>
-					<CardTitle>Community Interaction</CardTitle>
+					<CardTitle class="text-lg sm:text-xl">Community Interaction</CardTitle>
 					<CardDescription>Stay connected with your asset users</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<div class="space-y-8">
+					<div class="space-y-6 sm:space-y-8">
 						<div>
-							<h3 class="mb-4 text-xl font-semibold">Recent Activity</h3>
+							<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">Recent Activity</h3>
 							<ScrollArea class="h-[300px]">
 								{#each communityActivity as activity}
-									<div class="mb-4 flex items-center justify-between">
-										<div class="flex items-center space-x-4">
+									<div
+										class="mb-4 flex flex-col items-start justify-between sm:flex-row sm:items-center"
+									>
+										<div class="mb-2 flex items-center space-x-3 sm:mb-0 sm:space-x-4">
 											<Avatar>
 												<AvatarFallback>{activity.user[0]}</AvatarFallback>
 											</Avatar>
 											<div>
-												<p class="font-semibold">{activity.user}</p>
-												<p class="text-sm text-gray-500">{activity.action} {activity.asset}</p>
+												<p class="text-sm font-semibold">{activity.user}</p>
+												<p class="text-xs text-gray-500 sm:text-sm">
+													{activity.action}
+													{activity.asset}
+												</p>
 											</div>
 										</div>
-										<p class="text-sm text-gray-500">{activity.date}</p>
+										<p class="text-xs text-gray-500 sm:text-sm">{activity.date}</p>
 									</div>
 								{/each}
 							</ScrollArea>
 						</div>
 						<div>
-							<h3 class="mb-4 text-xl font-semibold">User Communication</h3>
-							<p class="mb-2">Connect with users who have purchased your assets:</p>
-							<Button variant="outline">Open Discord Channel</Button>
+							<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">User Communication</h3>
+							<p class="mb-2 text-xs sm:text-sm">
+								Connect with users who have purchased your assets:
+							</p>
+							<Button variant="outline" class="w-full text-xs sm:w-auto sm:text-sm"
+								>Open Discord Channel</Button
+							>
 						</div>
 					</div>
 				</CardContent>
 			</Card>
 		</TabsContent>
-
-		<!-- Add these sections outside the Tabs component -->
-
-		<div class="mt-8">
-			<Card>
-				<CardHeader>
-					<CardTitle>License Management</CardTitle>
-					<CardDescription>Manage licenses for your assets</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<div class="space-y-4">
-						{#each userAssets as asset}
-							<div class="flex items-center justify-between">
-								<div>
-									<h3 class="font-semibold">{asset.name}</h3>
-									<p class="text-sm text-gray-500">Current License: {asset.license}</p>
-								</div>
-								<Button
-									variant="outline"
-									on:click={() => handleLicenseUpdate(asset.id, 'new-license')}
-								>
-									Update License
-								</Button>
-							</div>
-						{/each}
-					</div>
-				</CardContent>
-			</Card>
-		</div>
-
-		<div class="mt-8">
-			<Card>
-				<CardHeader>
-					<CardTitle>Collaborator Access</CardTitle>
-					<CardDescription>Manage collaborators for your assets</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<div class="space-y-4">
-						{#each userAssets as asset}
-							<div class="flex items-center justify-between">
-								<div>
-									<h3 class="font-semibold">{asset.name}</h3>
-									<p class="text-sm text-gray-500">
-										Collaborators: {asset.collaborators ? asset.collaborators.length : 0}
-									</p>
-								</div>
-								<Button variant="outline" on:click={() => handleAddCollaborator(asset.id)}>
-									Add Collaborator
-								</Button>
-							</div>
-						{/each}
-					</div>
-				</CardContent>
-			</Card>
-		</div>
 	</Tabs>
+
+	<div class="mt-6 sm:mt-8">
+		<Card>
+			<CardHeader>
+				<CardTitle class="text-lg sm:text-xl">License Management</CardTitle>
+				<CardDescription>Manage licenses for your assets</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<div class="space-y-4">
+					{#each userAssets as asset}
+						<div class="flex flex-col items-start justify-between sm:flex-row sm:items-center">
+							<div class="mb-2 sm:mb-0">
+								<h3 class="text-sm font-semibold sm:text-base">{asset.name}</h3>
+								<p class="text-xs text-gray-500 sm:text-sm">Current License: {asset.license}</p>
+							</div>
+							<Button
+								variant="outline"
+								on:click={() => handleLicenseUpdate(asset.id, 'new-license')}
+								class="w-full text-xs sm:w-auto sm:text-sm"
+							>
+								Update License
+							</Button>
+						</div>
+					{/each}
+				</div>
+			</CardContent>
+		</Card>
+	</div>
+
+	<div class="mt-6 sm:mt-8">
+		<Card>
+			<CardHeader>
+				<CardTitle class="text-lg sm:text-xl">Collaborator Access</CardTitle>
+				<CardDescription>Manage collaborators for your assets</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<div class="space-y-4">
+					{#each userAssets as asset}
+						<div class="flex flex-col items-start justify-between sm:flex-row sm:items-center">
+							<div class="mb-2 sm:mb-0">
+								<h3 class="text-sm font-semibold sm:text-base">{asset.name}</h3>
+								<p class="text-xs text-gray-500 sm:text-sm">
+									Collaborators: {asset.collaborators ? asset.collaborators.length : 0}
+								</p>
+							</div>
+							<Button
+								variant="outline"
+								on:click={() => handleAddCollaborator(asset.id)}
+								class="w-full text-xs sm:w-auto sm:text-sm"
+							>
+								Add Collaborator
+							</Button>
+						</div>
+					{/each}
+				</div>
+			</CardContent>
+		</Card>
+	</div>
 </div>
