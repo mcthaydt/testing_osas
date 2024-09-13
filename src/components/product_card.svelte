@@ -29,7 +29,10 @@
 	}
 </script>
 
-<Card class="flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg">
+<Card
+	class="
+flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg"
+>
 	<AspectRatio ratio={16 / 9} class="bg-muted">
 		<img
 			src={product.imageUrl}
@@ -45,7 +48,7 @@
 				<p class="text-sm text-muted-foreground">By {product.assetDeveloper}</p>
 			</div>
 			<div class="flex flex-col items-end">
-				<div class="flex items-center space-x-1 text-yellow-400">
+				<div class="flex items-center space-x-1 text-primary">
 					<Star class="h-5 w-5 fill-current" />
 					<span class="text-sm font-medium"
 						>{product.rating.toFixed(1)} ({product.voters.length})</span

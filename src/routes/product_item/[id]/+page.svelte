@@ -147,7 +147,7 @@
 						>
 						<CardDescription>
 							<div class="flex items-center space-x-1">
-								<Star class="h-5 w-5 fill-yellow-400" />
+								<Star class="h-5 w-5 fill-primary" />
 								<span class="text-sm font-medium">{product.rating.toFixed(1)} Rating</span>
 							</div>
 							<div class="flex items-center space-x-1">

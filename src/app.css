@@ -26,6 +26,27 @@
     --radius: 0.5rem;
   }
   .dark {
+    --background: 222 15% 18%;
+    --foreground: 210 40% 98%;
+    --card: 224 12% 24%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 12% 24%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 16 80% 64%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 16 35% 35%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 20 9% 76%;
+    --muted-foreground: 210 40% 98%;
+    --accent: 16 35% 35%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 224 12% 24%;
+    --input: 224 12% 24%;
+    --ring: 16 33% 35%;
+  }
+  .dark_og {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
@@ -55,4 +76,21 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/inter-v13-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* inter-700 - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 700;
+	src: url('/fonts/inter-v13-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }

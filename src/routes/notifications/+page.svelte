@@ -171,7 +171,7 @@
 								tabindex="0"
 							>
 								<div class="flex-shrink-0">
-									<div class="rounded-full bg-secondary p-1 sm:p-2">
+									<div class="rounded-xl bg-secondary-foreground p-1 sm:p-2">
 										<svelte:component
 											this={iconMap[notification.type]}
 											class="h-4 w-4 sm:h-5 sm:w-5 {getNotificationColor(notification.type)}"

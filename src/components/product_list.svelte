@@ -61,7 +61,7 @@
 	}
 </script>
 
-<div class="container mx-auto px-2 py-4 sm:px-4 sm:py-8">
+<div class="container mx-auto p-4">
 	<h1 class="mb-4 text-2xl font-bold sm:mb-6 sm:text-3xl">{pageTitle}</h1>
 	<div class="mb-4 flex flex-col space-y-4 sm:mb-6">
 		<div class="relative w-full">
@@ -75,7 +75,7 @@
 				bind:value={searchTerm}
 			/>
 		</div>
-		<div class="flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+		<div class="flex flex-col space-y-2 md:flex-row lg:space-x-2 lg:space-y-0">
 			<Select.Root bind:selected={selectedCategory}>
 				<Select.Trigger class="w-full sm:w-[180px]">
 					<Select.Value placeholder="Select category" />

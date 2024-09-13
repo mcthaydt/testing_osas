@@ -124,10 +124,10 @@
 		<div class="mt-4 flex justify-center">
 			<div class="flex flex-col items-center gap-4 sm:flex-row">
 				<a href="/godot">
-					<Button variant="outline" size="lg">Browse Godot Assets</Button>
+					<Button variant="default" size="default">Browse Godot Assets</Button>
 				</a>
 				<a href="/bevy">
-					<Button variant="secondary" size="lg">Browse Bevy Assets</Button>
+					<Button variant="secondary" size="default">Browse Bevy Assets</Button>
 				</a>
 			</div>
 		</div>
@@ -228,7 +228,7 @@
 		<h2 class="mb-4 text-3xl font-bold">Any Questions?</h2>
 		<p class="mb-8">For Frequently Asked Questions, Legal Information, and Community</p>
 		<a href="support/">
-			<Button variant="secondary" size="lg">Visit Support</Button>
+			<Button variant="outline" size="lg">Visit Support</Button>
 		</a>
 	</section>
 
