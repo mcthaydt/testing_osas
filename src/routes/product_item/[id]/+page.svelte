@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { getProduct, addReview } from '$lib/stores/productStore';
+	import { getProduct, addReview, upvote } from '$lib/stores/productStore';
 	import { Button } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Input } from '$lib/components/ui/input';
@@ -17,6 +17,8 @@
 	import { AspectRatio } from '$lib/components/ui/aspect-ratio';
 	import { Star, ShoppingCart, Download, Video, Users, Tag } from 'lucide-svelte';
 	import { cartStore, type CartItem } from '$lib/stores/cartStore';
+	import { Alert, AlertDescription } from '$lib/components/ui/alert';
+	import { onMount } from 'svelte';
 
 	const productId = $page.params.id;
 	const product = getProduct(productId);
@@ -26,6 +28,23 @@
 
 	let userRating = 0;
 	let userReview = '';
+	let showAlert = false;
+	let alertMessage = '';
+	let alertTimeout: number | null = null;
+
+	function showAlertWithTimeout(message: string) {
+		showAlert = true;
+		alertMessage = message;
+
+		if (alertTimeout) {
+			clearTimeout(alertTimeout);
+		}
+
+		alertTimeout = setTimeout(() => {
+			showAlert = false;
+			alertTimeout = null;
+		}, 3000);
+	}
 
 	function addToCart() {
 		if (product) {
@@ -38,6 +57,7 @@
 				category: product.category
 			};
 			cartStore.addItem(cartItem);
+			showAlertWithTimeout('Item added to cart');
 		}
 	}
 
@@ -51,16 +71,49 @@
 			});
 			userRating = 0;
 			userReview = '';
+			showAlertWithTimeout('Review submitted successfully');
 		}
 	}
+
+	function copyToClipboard(text: string) {
+		navigator.clipboard.writeText(text).then(() => {
+			showAlertWithTimeout('URL copied to clipboard');
+		});
+	}
+
+	function upvoteProduct() {
+		if (product) {
+			upvote(product.id, 'Current User');
+			showAlertWithTimeout('Product upvoted');
+		}
+	}
+
+	onMount(() => {
+		return () => {
+			if (alertTimeout) {
+				clearTimeout(alertTimeout);
+			}
+		};
+	});
 </script>
+
+{#if showAlert}
+	<Alert variant="default" class="mb-4">
+		<AlertDescription>{alertMessage}</AlertDescription>
+	</Alert>
+{/if}
 
 {#if product}
 	<div class="container mx-auto p-4">
 		<div class="grid gap-8 md:grid-cols-2">
 			<div class="space-y-6">
 				<h1 class="text-4xl font-bold">{product.name}</h1>
-				<Badge variant="secondary">{product.category}</Badge>
+				<Badge variant="outline">Engine: {product.engine}</Badge>
+				<Badge variant="outline">
+					Engine Version: {product.engineVersions.length > 0
+						? product.engineVersions[0].version
+						: 'Not specified'}
+				</Badge>
 				<AspectRatio ratio={16 / 9}>
 					<img
 						src={product.imageUrl}
@@ -97,16 +150,37 @@
 								<Star class="h-5 w-5 fill-yellow-400" />
 								<span class="text-sm font-medium">{product.rating.toFixed(1)} Rating</span>
 							</div>
+							<div class="flex items-center space-x-1">
+								<Users class="h-5 w-5" />
+								<span class="text-sm font-medium">{product.voters.length} Votes</span>
+							</div>
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<p class="text-lg">{product.description}</p>
 					</CardContent>
 					<CardFooter>
-						<Button class="w-full" size="lg" on:click={addToCart}>
-							<ShoppingCart class="mr-2 h-5 w-5" />
-							Add to Cart
-						</Button>
+						{#if product.status === 'pending'}
+							<div class="flex flex-col space-y-2">
+								<Button
+									class="w-full"
+									size="lg"
+									on:click={() => copyToClipboard(window.location.href)}
+								>
+									<Download class="mr-2 h-5 w-5" />
+									Share
+								</Button>
+								<Button class="w-full" size="lg" on:click={upvoteProduct}>
+									<Star class="mr-2 h-5 w-5" />
+									Upvote
+								</Button>
+							</div>
+						{:else}
+							<Button class="w-full" size="lg" on:click={addToCart}>
+								<ShoppingCart class="mr-2 h-5 w-5" />
+								Add to Cart
+							</Button>
+						{/if}
 					</CardFooter>
 				</Card>
 				<Card>
@@ -114,6 +188,13 @@
 						<CardTitle>Product Details</CardTitle>
 					</CardHeader>
 					<CardContent class="space-y-2">
+						<p><strong>Engine:</strong> {product.engine}</p>
+						<p>
+							<strong>Engine Version:</strong>
+							{product.engineVersions.length > 0
+								? product.engineVersions[0].version
+								: 'Not specified'}
+						</p>
 						<p><strong>Version:</strong> {product.version}</p>
 						<p><strong>License:</strong> {product.license}</p>
 						<p>
@@ -121,6 +202,7 @@
 							{new Date(product.releaseDate).toLocaleDateString()}
 						</p>
 						<p><strong>AI Generated:</strong> {product.isAiGenerated ? 'Yes' : 'No'}</p>
+						<p><strong>Developer:</strong> {product.assetDeveloper}</p>
 					</CardContent>
 				</Card>
 				{#if product.collaborators.length > 0}
@@ -131,7 +213,7 @@
 						<CardContent>
 							<ul class="list-inside list-disc">
 								{#each product.collaborators as collaborator}
-									<li>{collaborator.email} - {collaborator.revenueSplit}% revenue share</li>
+									<li>{collaborator.email}</li>
 								{/each}
 							</ul>
 						</CardContent>
@@ -206,9 +288,9 @@
 												<Star class="h-5 w-5 fill-yellow-400" />
 												<span>{review.rating}</span>
 											</div>
-											<span class="text-sm text-muted-foreground"
-												>{new Date(review.date).toLocaleDateString()}</span
-											>
+											<span class="text-sm text-muted-foreground">
+												{new Date(review.date).toLocaleDateString()}
+											</span>
 										</div>
 										<p class="mt-2">{review.comment}</p>
 										<p class="mt-1 text-sm text-muted-foreground">By {review.user}</p>

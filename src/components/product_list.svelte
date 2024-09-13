@@ -8,26 +8,32 @@
 	import { flip } from 'svelte/animate';
 	import { fade } from 'svelte/transition';
 	import type { SelectValue } from '$lib/components/ui/select';
-	import { products } from '$lib/stores/productStore';
+	import { getProductsByEngine } from '$lib/stores/productStore';
 
 	export let pageTitle = 'Products';
-	export let engine: 'Godot' | 'Bevy';
+	export let engine: 'Godot' | 'Bevy' | 'Other' | 'General';
 
 	let searchTerm = '';
 	let selectedCategory: SelectValue<string> = { value: 'All' };
 	let sortOption: SelectValue<string> = { value: 'name' };
+	let selectedEngineVersion: SelectValue<string> = { value: 'All' };
 	let selectedTags: string[] = [];
 	let showTagFilter = false;
 
-	$: allProducts = $products.filter((p) => p.category === engine && p.status === 'approved');
+	$: allProducts = getProductsByEngine(engine);
 	$: allTags = [...new Set(allProducts.flatMap((p) => p.tags))];
+	$: engineVersions = [
+		...new Set(allProducts.flatMap((p) => p.engineVersions.map((ev) => ev.version)))
+	];
 
 	$: filteredProducts = allProducts
 		.filter(
 			(product) =>
 				product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
 				(selectedCategory.value === 'All' || product.category === selectedCategory.value) &&
-				(selectedTags.length === 0 || selectedTags.every((tag) => product.tags.includes(tag)))
+				(selectedTags.length === 0 || selectedTags.every((tag) => product.tags.includes(tag))) &&
+				(selectedEngineVersion.value === 'All' ||
+					product.engineVersions.some((ev) => ev.version === selectedEngineVersion.value))
 		)
 		.sort((a, b) => {
 			switch (sortOption.value) {
@@ -91,6 +97,17 @@
 					<Select.Item value="rating">Rating</Select.Item>
 					<Select.Item value="releaseDate">Release Date</Select.Item>
 					<Select.Item value="upvotes">Upvotes</Select.Item>
+				</Select.Content>
+			</Select.Root>
+			<Select.Root bind:selected={selectedEngineVersion}>
+				<Select.Trigger class="w-full sm:w-[180px]">
+					<Select.Value placeholder="ngine version" />
+				</Select.Trigger>
+				<Select.Content>
+					<Select.Item value="All">All</Select.Item>
+					{#each engineVersions as version}
+						<Select.Item value={version}>{version}</Select.Item>
+					{/each}
 				</Select.Content>
 			</Select.Root>
 			<Button

@@ -31,9 +31,9 @@
 		}
 	];
 
-	const featuredAsset = {
-		name: 'This collection is just a placeholder',
-		description: "We're looking for a real one though 👀",
+	const featuredCollection = {
+		name: 'Top Performers',
+		description: 'Assets that are doing well in the market',
 		image:
 			'https://images.pexels.com/photos/27180675/pexels-photo-27180675/free-photo-of-perito-moreno-glacier-in-patagonia.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load'
 	};
@@ -62,6 +62,29 @@
 	});
 	$: sortedProducts = productsNearingDeadline.sort((a, b) => b.upvotes - a.upvotes);
 	$: signupCount = 0;
+
+	onMount(async () => {
+		const cookieConsent = localStorage.getItem('cookieConsent');
+		if (!cookieConsent) {
+			showCookieConsent = true;
+		}
+
+		// Fetch signup count from Google Sheets
+		try {
+			const response = await fetch(
+				'https://sheets.googleapis.com/v4/spreadsheets/1zklkm1psbKyjpe60qJFXgupb0Ly-3-pSH5-VTKvwSxQ/values/Form Responses 1!B2:B?key=AIzaSyAW0FnbcoO0IxV5_nnjZ1G7bqoqek-o32w'
+			);
+			const data = await response.json();
+			console.log('Google Sheets API response:', data); // Log the response
+			if (data.values && data.values.length > 0) {
+				signupCount = data.values.length; // Count the number of email addresses
+			} else {
+				signupCount = 0; // No data found
+			}
+		} catch (error) {
+			console.error('Error fetching signup count:', error);
+		}
+	});
 
 	function getRemainingTime(uploadDate: string) {
 		const uploadTime = new Date(uploadDate).getTime();
@@ -115,16 +138,16 @@
 		<Card class="overflow-hidden">
 			<div class="grid grid-cols-1 md:grid-cols-2">
 				<img
-					src={featuredAsset.image}
-					alt={featuredAsset.name}
+					src={featuredCollection.image}
+					alt={featuredCollection.name}
 					class="h-full w-full object-cover"
 				/>
 				<div class="p-6">
 					<CardHeader>
-						<CardTitle class="text-2xl">{featuredAsset.name}</CardTitle>
+						<CardTitle>{featuredCollection.name}</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<p>{featuredAsset.description}</p>
+						<p>{featuredCollection.description}</p>
 					</CardContent>
 					<CardFooter>
 						<div class="flex flex-col gap-2 md:flex-row">
@@ -219,7 +242,7 @@
 
 	<footer class="border-t py-12">
 		<div class="flex items-center justify-between">
-			<div class="text-sm">&copy; 2024 717 Holdings Company. All rights reserved.</div>
+			<div class="text-sm">&copy; 2024 SOS Holdings Company. All rights reserved.</div>
 			<div class="flex space-x-4">
 				<a href="https://github.com/mcthaydt" class="text-gray-500 hover:text-blue-500">
 					<Github size={24} />

@@ -42,11 +42,16 @@
 		<div class="flex items-start justify-between">
 			<div class="space-y-1">
 				<CardTitle class="line-clamp-2 text-xl font-semibold">{product.name}</CardTitle>
-				<Badge variant="secondary" class="text-xs">{product.category}</Badge>
+				<p class="text-sm text-muted-foreground">By {product.assetDeveloper}</p>
 			</div>
-			<div class="flex items-center space-x-1 text-yellow-400">
-				<Star class="h-5 w-5 fill-current" />
-				<span class="text-sm font-medium">{product.rating.toFixed(1)}</span>
+			<div class="flex flex-col items-end">
+				<div class="flex items-center space-x-1 text-yellow-400">
+					<Star class="h-5 w-5 fill-current" />
+					<span class="text-sm font-medium"
+						>{product.rating.toFixed(1)} ({product.voters.length})</span
+					>
+				</div>
+				<Badge variant="outline" class="mt-2 text-xs">{product.category}</Badge>
 			</div>
 		</div>
 	</CardHeader>

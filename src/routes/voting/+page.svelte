@@ -48,6 +48,13 @@
 	function handleUpvote(id: string) {
 		upvote(id);
 	}
+
+	function truncateText(text: string, maxLength: number): string {
+		if (text.length > maxLength) {
+			return text.substring(0, maxLength) + '...';
+		}
+		return text;
+	}
 </script>
 
 <div class="container mx-auto space-y-6 p-4">
@@ -91,7 +98,8 @@
 										<Clock class="mr-1 h-4 w-4" />
 										Time left: {getRemainingTime(product.uploadDate)}
 									</p>
-									<p class="mt-2 text-sm">{product.description}</p>
+									<p class="mt-2 text-sm">{truncateText(product.description, 100)}</p>
+									<!-- Truncate description to 100 characters -->
 								</div>
 							</div>
 						</CardContent>

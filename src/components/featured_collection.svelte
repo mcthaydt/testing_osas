@@ -8,12 +8,9 @@
 
 	export let showModal = false;
 
-	// You can customize this function to select featured products based on your criteria
 	function getFeaturedProducts($products: Product[]): Product[] {
-		// For example, select products with a rating above 4.5
-		return $products.filter((product) => product.rating > 4.5);
+		return $products.filter((product) => product.rating > 4.5 && product.status === 'approved');
 	}
-
 	$: featuredProducts = getFeaturedProducts($products);
 </script>
 
