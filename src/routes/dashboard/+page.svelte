@@ -167,9 +167,12 @@
 	</div>
 
 	<Tabs defaultValue="assets" class="mt-6 sm:mt-8">
-		<TabsList class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+		<TabsList class="grid grid-cols-2 gap-2 sm:grid-cols-2 max-w-md mx-auto">
 			<TabsTrigger value="assets" class="text-sm">Assets</TabsTrigger>
 			<TabsTrigger value="analytics" class="text-sm">Analytics</TabsTrigger>
+		</TabsList>
+		<div class="mt-4"></div>
+		<TabsList class="grid grid-cols-2 gap-2 sm:grid-cols-2 max-w-md mx-auto">
 			<TabsTrigger value="sales" class="text-sm">Sales</TabsTrigger>
 			<TabsTrigger value="community" class="text-sm">Community</TabsTrigger>
 		</TabsList>
