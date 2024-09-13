@@ -159,8 +159,8 @@
 				<CardTitle class="text-lg sm:text-xl">Sales & Revenue Overview</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<div class="max-w-full overflow-hidden">
-					<canvas bind:this={chartCanvas}></canvas>
+				<div class="relative h-[250px] w-full sm:h-[300px] md:h-[400px]">
+					<canvas bind:this={chartCanvas} class="absolute inset-0"></canvas>
 				</div>
 			</CardContent>
 		</Card>
