@@ -37,7 +37,7 @@ We're not quite ready for contributions yet, but we're excited about the communi
 
 ## 📬 Contact
 
-For inquiries or to express interest in early access, please contact us at [email@osas.com](mailto:email@osas.com).
+For inquiries or to express interest in early access, please contact us at [mcthaydt@gmail.com](mailto:mcthaydt@gmail.com).
 
 ## 📣 Stay Updated
 
