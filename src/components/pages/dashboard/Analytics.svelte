@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { setUser, userStore } from '$lib/stores/userStore';
 	import {
 		Card,
 		CardContent,
@@ -7,11 +8,7 @@
 		CardDescription
 	} from '$lib/components/ui/card';
 
-	const geographicData = [
-		{ country: 'USA', downloads: 5000, revenue: 25000 },
-		{ country: 'UK', downloads: 3000, revenue: 15000 },
-		{ country: 'Germany', downloads: 2000, revenue: 10000 }
-	];
+	$: geographicData = $userStore?.geographicData || [];
 
 	function formatCurrency(amount: number): string {
 		return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);

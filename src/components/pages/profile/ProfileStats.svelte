@@ -1,16 +1,15 @@
 <script lang="ts">
 	import { Card, CardHeader, CardContent, CardTitle } from '$lib/components/ui/card';
 	import { ShoppingCart, Download, Star, Tag } from 'lucide-svelte';
-
 	export let stats: {
-		assetsPublished: number;
-		assetsSold: number;
-		totalRevenue: number;
-		averageRating: number;
-		assetsPurchased: number;
-		totalSpent: number;
-		reviewsGiven: number;
-	};
+		assetsPublished?: number;
+		assetsSold?: number;
+		totalRevenue?: number;
+		averageRating?: number;
+		assetsPurchased?: number;
+		totalSpent?: number;
+		reviewsGiven?: number;
+	} = {};
 	export let viewMode: 'seller' | 'buyer';
 </script>
 
@@ -22,7 +21,7 @@
 				<ShoppingCart class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">{stats.assetsPublished}</div>
+				<div class="text-2xl font-bold">{stats.assetsPublished ?? 0}</div>
 			</CardContent>
 		</Card>
 		<Card>
@@ -31,7 +30,7 @@
 				<Download class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">{stats.assetsSold}</div>
+				<div class="text-2xl font-bold">{stats.assetsSold ?? 0}</div>
 			</CardContent>
 		</Card>
 		<Card>
@@ -40,7 +39,7 @@
 				<ShoppingCart class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">${stats.totalRevenue.toFixed(2)}</div>
+				<div class="text-2xl font-bold">${(stats.totalRevenue ?? 0).toFixed(2)}</div>
 			</CardContent>
 		</Card>
 		<Card>
@@ -49,7 +48,7 @@
 				<Star class="h-4 w-5 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">{stats.averageRating.toFixed(1)}</div>
+				<div class="text-2xl font-bold">{(stats.averageRating ?? 0).toFixed(1)}</div>
 			</CardContent>
 		</Card>
 	{:else}
@@ -59,7 +58,7 @@
 				<ShoppingCart class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">{stats.assetsPurchased}</div>
+				<div class="text-2xl font-bold">{stats.assetsPurchased ?? 0}</div>
 			</CardContent>
 		</Card>
 		<Card>
@@ -68,7 +67,7 @@
 				<Tag class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">${stats.totalSpent.toFixed(2)}</div>
+				<div class="text-2xl font-bold">${(stats.totalSpent ?? 0).toFixed(2)}</div>
 			</CardContent>
 		</Card>
 		<Card>
@@ -77,7 +76,7 @@
 				<Star class="h-4 w-4 text-muted-foreground" />
 			</CardHeader>
 			<CardContent>
-				<div class="text-2xl font-bold">{stats.reviewsGiven}</div>
+				<div class="text-2xl font-bold">{stats.reviewsGiven ?? 0}</div>
 			</CardContent>
 		</Card>
 	{/if}

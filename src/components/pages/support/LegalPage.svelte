@@ -27,7 +27,7 @@
 			},
 			{
 				heading: '6. Governing Law',
-				text: 'These Terms shall be governed and construed in accordance with the laws of [Your Country/State], without regard to its conflict of law provisions.'
+				text: 'These Terms shall be governed and construed in accordance with the laws of United States of America, without regard to its conflict of law provisions.'
 			},
 			{
 				heading: '7. Changes to Terms',
@@ -35,7 +35,7 @@
 			},
 			{
 				heading: '8. Contact Us',
-				text: 'If you have any questions about these Terms, please contact us at [Your Contact Information].'
+				text: 'If you have any questions about these Terms, please contact us at mcthaydt@gmail.com.'
 			}
 		]
 	};
@@ -74,7 +74,7 @@
 			},
 			{
 				heading: '8. Contact Us',
-				text: 'If you have any questions or concerns about our privacy policy, please contact us at [Your Contact Information].'
+				text: 'If you have any questions or concerns about our privacy policy, please contact us at mcthaydt@gmail.com.'
 			}
 		]
 	};
@@ -113,7 +113,7 @@
 			},
 			{
 				heading: '8. Contact Us',
-				text: 'If you have any questions about our use of cookies, please contact us at [Your Contact Information].'
+				text: 'If you have any questions about our use of cookies, please contact us at mcthaydt@gmail.com.'
 			}
 		]
 	};

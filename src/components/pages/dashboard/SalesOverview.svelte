@@ -52,7 +52,7 @@
 		<CardTitle class="text-lg sm:text-xl">Sales & Revenue Overview</CardTitle>
 	</CardHeader>
 	<CardContent>
-		<div class="relative h-[250px] w-full sm:h-[300px] md:h-[400px]">
+		<div class="relative min-h-[150px] w-full md:min-h-[400px] lg:min-h-[600px]">
 			<canvas bind:this={chartCanvas} class="absolute inset-0"></canvas>
 		</div>
 	</CardContent>

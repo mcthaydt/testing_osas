@@ -22,7 +22,7 @@
 			title: 'Email',
 			description: 'Contact our support team directly via email.',
 			icon: Mail,
-			link: 'mailto:support@yourcompany.com',
+			link: 'mailto:mcthaydt@gmail.com',
 			locked: false
 		}
 	];

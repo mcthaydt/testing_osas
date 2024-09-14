@@ -12,15 +12,17 @@
 	import Community from './Community.svelte';
 	import LicenseManagement from './LicenseManagement.svelte';
 	import CollaboratorAccess from './CollaboratorAccess.svelte';
+	import { setUser } from '$lib/stores/userStore';
 
 	let userAssets: Product[] = [];
 	let notifications: any[] = [];
 
 	onMount(() => {
+		setUser('user-123');
+
 		const unsubscribe = productStore.subscribe((products) => {
 			userAssets = products.filter((product) => product.assetDeveloper === 'currentUserId');
 		});
-
 		notifications = $notificationStore;
 
 		return unsubscribe;

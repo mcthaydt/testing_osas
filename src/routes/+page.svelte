@@ -12,6 +12,8 @@
 	import { onMount } from 'svelte';
 	import { productStore } from '$lib/stores/productStore';
 	import type { Product } from '$lib/types/productTypes'; // Update this import path if necessary
+	import { GOOGLE_SHEETS_API_KEY } from '$lib/env';
+
 	// Static Data
 	const features = [
 		{
@@ -32,7 +34,6 @@
 			description: 'Keep more of your earnings while supporting open source game development.'
 		}
 	];
-	let showFeaturedCollectionModal = false;
 	let showCookieConsent = false;
 	let signupCount = 0;
 	let products: Product[] = [];
@@ -65,7 +66,7 @@
 		// Fetch signup count from Google Sheets
 		try {
 			const response = await fetch(
-				'https://sheets.googleapis.com/v4/spreadsheets/1zklkm1psbKyjpe60qJFXgupb0Ly-3-pSH5-VTKvwSxQ/values/Form Responses 1!B2:B?key=AIzaSyAW0FnbcoO0IxV5_nnjZ1G7bqoqek-o32w'
+				`https://sheets.googleapis.com/v4/spreadsheets/1zklkm1psbKyjpe60qJFXgupb0Ly-3-pSH5-VTKvwSxQ/values/Form Responses 1!B2:B?key=${GOOGLE_SHEETS_API_KEY}`
 			);
 			const data = await response.json();
 			console.log('Google Sheets API response:', data);

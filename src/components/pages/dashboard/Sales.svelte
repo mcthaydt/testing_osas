@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { userStore } from '$lib/stores/userStore';
 	import { Button } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
 	import {
@@ -10,11 +11,7 @@
 	} from '$lib/components/ui/card';
 	import { Settings } from 'lucide-svelte';
 
-	const salesHistory = [
-		{ date: '2023-06-01', asset: 'Asset 1', amount: 99.99, status: 'completed' },
-		{ date: '2023-06-02', asset: 'Asset 2', amount: 49.99, status: 'pending' },
-		{ date: '2023-06-03', asset: 'Asset 3', amount: 149.99, status: 'completed' }
-	];
+	$: salesHistory = $userStore?.salesHistory || [];
 
 	function formatCurrency(amount: number): string {
 		return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { userStore } from '$lib/stores/userStore';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		Card,
@@ -10,11 +11,7 @@
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import { Avatar, AvatarFallback } from '$lib/components/ui/avatar';
 
-	const communityActivity = [
-		{ user: 'User1', action: 'Downloaded', asset: 'Asset 1', date: '2023-06-01' },
-		{ user: 'User2', action: 'Reviewed', asset: 'Asset 2', date: '2023-06-02' },
-		{ user: 'User3', action: 'Purchased', asset: 'Asset 3', date: '2023-06-03' }
-	];
+	$: communityActivity = $userStore?.communityActivity || [];
 </script>
 
 <Card>
