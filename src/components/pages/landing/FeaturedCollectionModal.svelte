@@ -2,19 +2,25 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Select from '$lib/components/ui/dialog';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
-	import ProductCard from './product_card.svelte';
-	import { products } from '$lib/stores/productStore';
-	import type { Product } from '$lib/stores/productStore';
+	import ProductCard from '../../product_card.svelte';
+	import { productStore } from '$lib/stores/productStore';
+	import { showFeaturedCollectionModal } from '$lib/stores/modalStore';
+	import type { Product } from '$lib/types/productTypes'; // Update this import path if necessary
 
-	export let showModal = false;
-
-	function getFeaturedProducts($products: Product[]): Product[] {
-		return $products.filter((product) => product.rating > 4.5 && product.status === 'approved');
+	function getFeaturedProducts(products: Product[]): Product[] {
+		return products.filter((product) => product.rating > 4.5 && product.status === 'approved');
 	}
-	$: featuredProducts = getFeaturedProducts($products);
+
+	let products: Product[] = [];
+	let featuredProducts: Product[] = [];
+
+	productStore.subscribe((value) => {
+		products = value;
+		featuredProducts = getFeaturedProducts(products);
+	});
 </script>
 
-<Select.Dialog bind:open={showModal}>
+<Select.Dialog bind:open={$showFeaturedCollectionModal}>
 	<Select.DialogContent class="sm:max-w-[425px] md:max-w-[600px] lg:max-w-[900px]">
 		<Select.DialogHeader>
 			<Select.DialogTitle>Featured Collection</Select.DialogTitle>
@@ -30,7 +36,9 @@
 			</div>
 		</ScrollArea>
 		<Select.DialogFooter class="mt-4">
-			<Button variant="outline" on:click={() => (showModal = false)}>Close</Button>
+			<Button variant="outline" on:click={() => showFeaturedCollectionModal.set(false)}
+				>Close</Button
+			>
 		</Select.DialogFooter>
 	</Select.DialogContent>
 </Select.Dialog>

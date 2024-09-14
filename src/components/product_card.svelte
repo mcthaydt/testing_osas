@@ -12,6 +12,7 @@
 	} from '$lib/components/ui/card';
 	import { AspectRatio } from '$lib/components/ui/aspect-ratio';
 	import { cartStore, type CartItem } from '$lib/stores/cartStore';
+	import { goto } from '$app/navigation';
 
 	export let product;
 
@@ -25,7 +26,6 @@
 			category: product.category
 		};
 		cartStore.addItem(cartItem);
-		console.log('Added to cart:', product.name);
 	}
 </script>
 
@@ -72,7 +72,7 @@ flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow
 			<ShoppingCart class="mr-2 h-5 w-5" />
 			Add to Cart
 		</Button>
-		<Button variant="secondary" href={`/product_item/${product.id}`} class="w-full">
+		<Button variant="secondary" on:click={() => goto(`/product_item/${product.id}`)} class="w-full">
 			<Info class="mr-2 h-5 w-5" />
 			View Details
 		</Button>
