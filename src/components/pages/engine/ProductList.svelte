@@ -53,7 +53,8 @@
 					(category === 'All' || product.category === category) &&
 					(tags.length === 0 || tags.every((tag) => product.tags.includes(tag))) &&
 					(engineVersion === 'All' ||
-						product.engineVersions.some((ev) => ev.version === engineVersion))
+						product.engineVersions.some((ev) => ev.version === engineVersion)) &&
+					product.status === 'approved'
 			)
 			.sort((a, b) => {
 				switch (sort) {

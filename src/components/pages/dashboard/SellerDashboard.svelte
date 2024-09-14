@@ -71,7 +71,8 @@
 		</TabsContent>
 	</Tabs>
 
+	<div class="mb-4"></div>
 	<LicenseManagement {userAssets} {handleLicenseUpdate} />
-
+	<div class="mb-4"></div>
 	<CollaboratorAccess {userAssets} {handleAddCollaborator} />
 </div>

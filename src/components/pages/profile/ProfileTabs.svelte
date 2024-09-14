@@ -15,18 +15,30 @@
 </script>
 
 <Tabs defaultValue={viewMode === 'seller' ? 'portfolio' : 'purchases'} class="mt-8">
-	<TabsList class="grid w-full grid-cols-2 sm:grid-cols-4">
+	<!-- First set of TabsList -->
+	<TabsList class="mx-auto grid max-w-md grid-cols-2 gap-2 sm:grid-cols-2">
 		{#if viewMode === 'seller'}
-			<TabsTrigger value="portfolio">Portfolio</TabsTrigger>
-			<TabsTrigger value="reviews">Reviews</TabsTrigger>
+			<TabsTrigger value="portfolio" class="text-sm">Portfolio</TabsTrigger>
+			<TabsTrigger value="reviews" class="text-sm">Reviews</TabsTrigger>
 		{:else}
-			<TabsTrigger value="purchases">Purchases</TabsTrigger>
-			<TabsTrigger value="reviews-given">Reviews Given</TabsTrigger>
+			<TabsTrigger value="purchases" class="text-sm">Purchases</TabsTrigger>
+			<TabsTrigger value="reviews-given" class="text-sm">Reviews Given</TabsTrigger>
 		{/if}
-		<TabsTrigger value="badges">Badges</TabsTrigger>
-		<TabsTrigger value="activity">Activity</TabsTrigger>
 	</TabsList>
 
+	<!-- Spacer between the two sets -->
+	<div class="mt-4"></div>
+
+	<!-- Second set of TabsList -->
+	<TabsList class="mx-auto grid max-w-md grid-cols-2 gap-2 sm:grid-cols-2">
+		<TabsTrigger value="badges" class="text-sm">Badges</TabsTrigger>
+		<TabsTrigger value="activity" class="text-sm">Activity</TabsTrigger>
+	</TabsList>
+
+	<!-- Spacer below the second set -->
+	<div class="mb-4"></div>
+
+	<!-- Tabs Content -->
 	{#if viewMode === 'seller'}
 		<TabsContent value="portfolio">
 			<PortfolioTab {user} {userAssets} />

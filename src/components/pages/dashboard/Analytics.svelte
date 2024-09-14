@@ -25,10 +25,10 @@
 	</CardHeader>
 	<CardContent>
 		<div class="space-y-6 sm:space-y-8">
-			<div class="overflow-x-auto">
+			<div class="max-w-full overflow-x-auto">
 				<h3 class="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">Geographic Distribution</h3>
-				<div class="w-full overflow-x-auto">
-					<table class="w-full min-w-[300px]">
+				<div class="w-full">
+					<table class="w-full min-w-[200px] max-w-full">
 						<thead>
 							<tr>
 								<th class="text-left text-xs sm:text-sm">Country</th>
