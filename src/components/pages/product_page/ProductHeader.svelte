@@ -6,9 +6,9 @@
 
 {#if product}
 	<h1 class="text-4xl font-bold">{product.name}</h1>
-	<Badge variant="outline">Engine: {product.engine?.value || 'Not specified'}</Badge>
+	<Badge variant="outline">Engine: {product.engine || 'Not specified'}</Badge>
 	<Badge variant="outline">
-		Engine Version: {product.engineVersion || 'Not specified'}
+		Engine Version: {product.engineVersions[0].version || 'Not specified'}
 	</Badge>
 {:else}
 	<p>Loading product information...</p>

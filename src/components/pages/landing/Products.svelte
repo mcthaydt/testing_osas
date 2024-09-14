@@ -14,7 +14,7 @@
 <section class="features container py-16">
 	<h2 class="mb-2 text-center text-3xl font-bold">Under 24 Hours Remaining</h2>
 	<p class="mb-12 text-center text-sm text-muted-foreground">
-		These assets have less than 24 hours to get above the minimum votes
+		These assets have less than 24 hours to get above the minimum votes (10)
 	</p>
 	<div class="grid grid-cols-1 gap-8 md:grid-cols-1 lg:grid-cols-2">
 		{#each sortedProducts as product (product.id)}

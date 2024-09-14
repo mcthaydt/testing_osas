@@ -10,13 +10,13 @@
 		<CardTitle>Product Details</CardTitle>
 	</CardHeader>
 	<CardContent class="space-y-2">
-		<p><strong>Engine:</strong> {product.engine?.value || 'Not specified'}</p>
+		<p><strong>Engine:</strong> {product.engine || 'Not specified'}</p>
 		<p>
 			<strong>Engine Version:</strong>
-			{product.engineVersion || 'Not specified'}
+			{product.engineVersions[0].version || 'Not specified'}
 		</p>
 		<p><strong>Version:</strong> {product.version || 'Not specified'}</p>
-		<p><strong>License:</strong> {product.license?.value || 'Not specified'}</p>
+		<p><strong>License:</strong> {product.license || 'Not specified'}</p>
 		<p>
 			<strong>Release Date:</strong>
 			{product.releaseDate ? new Date(product.releaseDate).toLocaleDateString() : 'Not specified'}
